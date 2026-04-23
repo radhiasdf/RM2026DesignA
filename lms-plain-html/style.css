@@ -1,0 +1,90 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f4f4f4;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+}
+
+.card-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.card {
+    background: white;
+    border-radius: 8px;
+    padding: 16px;
+    width: 300px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card .title {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.card .meta {
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.progress-bar {
+    background: #eee;
+    height: 6px;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.progress-fill {
+    background: orange;
+    height: 100%;
+}
+
+#course-detail.hidden {
+    display: none;
+}
+
+#session-list .session {
+    background: #fff;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
+}
+
+.session-header {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.session-details {
+    margin-top: 10px;
+    display: none;
+    font-size: 0.9em;
+    color: #333;
+}
+
+button {
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+}

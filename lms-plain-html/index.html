@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Course Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="topbar-container"></div>
+    
+    <script>
+        fetch('topbar.html')
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById('topbar-container').innerHTML = html;
+            });
+    </script>
+
+    <div class="container">
+        <h1 class="text-2xl my-3">My Courses</h1> <!-- Nice medium headline -->
+        <div id="course-list" class="card-container"></div>
+    </div>
+
+    <div id="course-detail" class="hidden">
+        <button onclick="goBack()" class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded my-3">
+            ← Back
+        </button>
+        <h2  class="text-2xl my-4" id="course-title"></h2>
+        <div id="session-list"></div>
+    </div>
+
+    <script src="session/renderOutline.js"></script>
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
