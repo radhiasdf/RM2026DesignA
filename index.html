@@ -1,965 +1,1984 @@
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:var(--font-sans,system-ui);background:var(--color-background-tertiary);color:var(--color-text-primary);min-height:600px;}
-.app{display:flex;flex-direction:column;height:650px;}
+<!DOCTYPE html>
+<html lang="en">
 
-/* TOPBAR */
-.topbar{display:flex;align-items:center;height:48px;background:var(--color-background-primary);border-bottom:0.5px solid var(--color-border-tertiary);flex-shrink:0;}
-.topbar-logo{display:flex;align-items:center;gap:8px;padding:0 16px;border-right:0.5px solid var(--color-border-tertiary);height:100%;min-width:180px;}
-.logo-mark{font-weight:500;font-size:15px;letter-spacing:-0.3px;}
-.logo-mark span{color:#e87722;}
-.topbar-section{font-size:11px;font-weight:500;color:var(--color-text-secondary);letter-spacing:.06em;text-transform:uppercase;padding-left:14px;flex:1;}
-.topbar-right{display:flex;align-items:center;gap:8px;padding:0 14px;position:relative;}
-.icon-btn{width:32px;height:32px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--color-text-secondary);font-size:15px;position:relative;}
-.icon-btn:hover{background:var(--color-background-secondary);}
-.badge-dot{position:absolute;top:4px;right:4px;width:7px;height:7px;border-radius:50%;background:#e24b4a;border:1.5px solid var(--color-background-primary);}
-.avatar-sm{width:30px;height:30px;border-radius:50%;background:#0d2b5e;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:#fff;cursor:pointer;flex-shrink:0;}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Design A — BINUSmaya</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-/* BODY */
-.body{display:flex;flex:1;overflow:hidden;}
+    body {
+      font-family: var(--font-sans, system-ui);
+      background: var(--color-background-tertiary);
+      color: var(--color-text-primary);
+      min-height: 600px;
+    }
 
-/* FLAT SIDEBAR — fewer items, no labels, no nesting */
-.sidebar{width:180px;flex-shrink:0;background:var(--color-background-primary);border-right:0.5px solid var(--color-border-tertiary);display:flex;flex-direction:column;overflow-y:auto;padding:12px 0;}
-.user-chip{margin:0 10px 14px;display:flex;align-items:center;gap:8px;padding:10px;border-radius:var(--border-radius-md);background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);}
-.user-av{width:28px;height:28px;border-radius:50%;background:#0d2b5e;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:#fff;flex-shrink:0;}
-.user-name{font-size:12px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.user-role{font-size:10px;color:var(--color-text-secondary);}
-.nav-link{display:flex;align-items:center;gap:8px;padding:8px 14px;cursor:pointer;font-size:13px;color:var(--color-text-secondary);transition:background .15s;position:relative;}
-.nav-link:hover{background:var(--color-background-secondary);color:var(--color-text-primary);}
-.nav-link.active{color:#e87722;font-weight:500;background:rgba(232,119,34,0.08);}
-.nav-link.active::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2.5px;background:#e87722;border-radius:0 2px 2px 0;}
-.nav-link i{font-size:15px;width:18px;text-align:center;}
-.nav-nbadge{margin-left:auto;font-size:9px;font-weight:600;background:var(--color-background-danger);color:var(--color-text-danger);padding:1px 5px;border-radius:9px;}
+    .app {
+      display: flex;
+      flex-direction: column;
+      height: 650px;
+    }
 
-/* MAIN */
-.main{flex:1;overflow-y:auto;}
-.page{display:none;padding:20px;}
-.page.active{display:block;}
+    .topbar {
+      display: flex;
+      align-items: center;
+      height: 48px;
+      background: var(--color-background-primary);
+      border-bottom: 0.5px solid var(--color-border-tertiary);
+      flex-shrink: 0;
+    }
 
-/* HERO */
-.hero{border-radius:var(--border-radius-lg);background:linear-gradient(120deg,#0d2b5e 0%,#1a4080 60%,#8b2500 100%);padding:22px 24px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;position:relative;overflow:hidden;}
-.hero::before{content:'';position:absolute;right:-40px;top:-40px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,0.03);}
-.hero-greet{color:rgba(255,255,255,0.55);font-size:12px;}
-.hero-name{color:#fff;font-size:22px;font-weight:500;letter-spacing:-0.3px;margin-top:2px;}
-.hero-card{background:rgba(255,255,255,0.1);border:0.5px solid rgba(255,255,255,0.15);border-radius:var(--border-radius-md);padding:12px 16px;text-align:right;z-index:1;}
-.hero-card-lbl{font-size:10px;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;}
-.hero-class{font-size:12px;font-weight:500;color:#fff;}
-.hero-class-sub{font-size:11px;color:rgba(255,255,255,0.55);margin-top:1px;}
-.hero-time{font-size:11px;color:#e87722;margin-top:4px;font-weight:500;}
-.hero-open{margin-top:8px;background:#e87722;color:#fff;border:none;padding:6px 14px;border-radius:6px;font-size:11px;font-weight:500;cursor:pointer;}
+    .topbar-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 16px;
+      border-right: 0.5px solid var(--color-border-tertiary);
+      height: 100%;
+      min-width: 180px;
+    }
 
-/* SHARED CARD */
-.card{background:var(--color-background-primary);border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);padding:16px;}
-.card-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
-.card-title{font-size:13px;font-weight:500;}
-.card-more{font-size:11px;color:#e87722;cursor:pointer;}
-.sec-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
-.sec-title{font-size:14px;font-weight:500;}
+    .logo-mark {
+      font-weight: 500;
+      font-size: 15px;
+      letter-spacing: -0.3px;
+    }
 
-/* COURSE CARDS */
-.course-list{display:flex;flex-direction:column;gap:10px;margin-bottom:18px;}
-.course-card{background:var(--color-background-primary);border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);overflow:hidden;cursor:pointer;transition:border-color .2s;display:flex;align-items:stretch;}
-.course-card:hover{border-color:#e87722;}
-.cc-stripe{width:5px;flex-shrink:0;}
-.cc-calc .cc-stripe{background:#0d2b5e;}
-.cc-ai .cc-stripe{background:#0e2e1a;}
-.cc-bio .cc-stripe{background:#1e1040;}
-.cc-info{flex:1;padding:14px 16px;}
-.cc-code{font-size:10px;color:var(--color-text-tertiary);font-family:var(--font-mono);margin-bottom:2px;}
-.cc-name{font-size:14px;font-weight:500;margin-bottom:6px;}
-.cc-meta{display:flex;gap:12px;}
-.cc-meta-item{font-size:11px;color:var(--color-text-secondary);display:flex;align-items:center;gap:4px;}
-.prog-bar{height:4px;background:var(--color-background-secondary);border-radius:2px;overflow:hidden;margin:8px 0 0;}
-.prog-fill{height:100%;border-radius:2px;background:#e87722;}
-.cc-pct{font-size:11px;font-weight:500;color:#e87722;margin-top:4px;}
-.cc-arrow{display:flex;align-items:center;padding:0 14px;color:var(--color-text-tertiary);font-size:16px;}
+    .logo-mark span {
+      color: #e87722;
+    }
 
-/* ASSIGNMENT LIST */
-.asgn-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:0.5px solid var(--color-border-tertiary);}
-.asgn-item:last-child{border:none;}
-.asgn-ic{width:34px;height:34px;border-radius:var(--border-radius-md);background:rgba(232,119,34,0.08);display:flex;align-items:center;justify-content:center;color:#e87722;font-size:14px;flex-shrink:0;}
-.asgn-ic.late{background:var(--color-background-danger);color:var(--color-text-danger);}
-.asgn-t{font-size:12px;font-weight:500;}
-.asgn-s{font-size:11px;color:var(--color-text-secondary);margin-top:1px;}
-.asgn-tag{margin-left:auto;font-size:10px;font-weight:500;color:#e87722;background:rgba(232,119,34,0.08);padding:3px 7px;border-radius:4px;white-space:nowrap;flex-shrink:0;}
-.asgn-tag.late{color:var(--color-text-danger);background:var(--color-background-danger);}
-.asgn-open-btn{margin-left:8px;background:transparent;border:0.5px solid var(--color-border-tertiary);color:var(--color-text-secondary);font-size:11px;padding:4px 9px;border-radius:5px;cursor:pointer;white-space:nowrap;}
-.asgn-open-btn:hover{background:var(--color-background-secondary);}
+    .topbar-section {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding-left: 14px;
+      flex: 1;
+    }
 
-/* ANNOUNCEMENT */
-.ann-item{padding:12px 0;border-bottom:0.5px solid var(--color-border-tertiary);cursor:pointer;}
-.ann-item:last-child{border:none;}
-.ann-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#e87722;margin-right:6px;flex-shrink:0;}
-.ann-title{font-size:13px;font-weight:500;display:flex;align-items:center;margin-bottom:3px;}
-.ann-from{font-size:11px;color:var(--color-text-secondary);}
-.ann-time{font-size:10px;color:var(--color-text-tertiary);margin-top:2px;}
-.ann-body{font-size:12px;color:var(--color-text-secondary);margin-top:6px;line-height:1.55;}
-.ann-item.expanded .ann-body{display:block;}
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 14px;
+      position: relative;
+    }
 
-/* COURSE DETAIL — flat, cards for sessions */
-.cd-back{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--color-text-secondary);cursor:pointer;margin-bottom:14px;padding:4px 0;}
-.cd-back:hover{color:var(--color-text-primary);}
-.cd-header{background:var(--color-background-primary);border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);padding:18px;margin-bottom:14px;display:flex;align-items:center;gap:14px;}
-.cd-badge{width:48px;height:48px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff;flex-shrink:0;}
-.cd-title{font-size:18px;font-weight:500;}
-.cd-sub{font-size:12px;color:var(--color-text-secondary);margin-top:3px;}
+    .icon-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--border-radius-md);
+      border: 0.5px solid var(--color-border-tertiary);
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-secondary);
+      font-size: 15px;
+      position: relative;
+    }
 
-/* FLAT COURSE TABS — only: Sessions, Forum, Assignments */
-.cd-tabs{display:flex;gap:2px;margin-bottom:14px;border-bottom:0.5px solid var(--color-border-tertiary);}
-.cd-tab{padding:8px 16px;font-size:13px;cursor:pointer;color:var(--color-text-secondary);border-bottom:2px solid transparent;margin-bottom:-1px;background:transparent;border-top:none;border-left:none;border-right:none;}
-.cd-tab.active{color:#e87722;border-bottom-color:#e87722;font-weight:500;}
-.cd-tab:hover:not(.active){color:var(--color-text-primary);}
+    .icon-btn:hover {
+      background: var(--color-background-secondary);
+    }
 
-/* SESSION CARDS LIST */
-.session-list{display:flex;flex-direction:column;gap:8px;}
-.sess-card{background:var(--color-background-primary);border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);padding:14px 16px;cursor:pointer;transition:border-color .2s;}
-.sess-card:hover{border-color:#e87722;}
-.sess-card.current{border-color:#e87722;background:rgba(232,119,34,0.04);}
-.sess-hd{display:flex;align-items:center;gap:10px;}
-.sess-num{width:32px;height:32px;border-radius:var(--border-radius-md);background:var(--color-background-secondary);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--color-text-secondary);flex-shrink:0;}
-.sess-card.current .sess-num{background:#e87722;color:#fff;}
-.sess-title{font-size:13px;font-weight:500;flex:1;}
-.sess-badge{font-size:10px;font-weight:500;padding:2px 7px;border-radius:4px;background:rgba(232,119,34,0.1);color:#e87722;}
-.sess-badge.done{background:var(--color-background-success);color:var(--color-text-success);}
-.sess-badge.upcoming{background:var(--color-background-secondary);color:var(--color-text-secondary);}
-.sess-resources{display:flex;gap:8px;margin-top:10px;padding-top:10px;border-top:0.5px solid var(--color-border-tertiary);}
-.res-btn{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--color-text-secondary);padding:5px 10px;border-radius:5px;border:0.5px solid var(--color-border-tertiary);background:transparent;cursor:pointer;transition:all .15s;}
-.res-btn:hover{border-color:#e87722;color:#e87722;}
-.res-btn i{font-size:13px;}
+    .badge-dot {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #e24b4a;
+      border: 1.5px solid var(--color-background-primary);
+    }
 
-/* FORUM */
-.forum-compose{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px;margin-bottom:14px;}
-.forum-compose-title{font-size:13px;font-weight:500;margin-bottom:10px;}
-.compose-input{width:100%;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:8px 10px;font-size:12px;background:var(--color-background-secondary);color:var(--color-text-primary);resize:none;font-family:inherit;}
-.compose-input:focus{outline:none;border-color:#e87722;}
-.compose-toolbar{display:flex;align-items:center;gap:8px;margin-top:8px;}
-.compose-submit{margin-left:auto;background:#e87722;color:#fff;border:none;padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;}
-.compose-submit:hover{opacity:.85;}
-.forum-post{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px;margin-bottom:10px;}
-.forum-post-hd{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
-.forum-avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:#fff;flex-shrink:0;}
-.forum-author{font-size:12px;font-weight:500;}
-.forum-time{font-size:11px;color:var(--color-text-tertiary);}
-.forum-body{font-size:12px;color:var(--color-text-secondary);line-height:1.6;margin-bottom:10px;}
-.forum-reply{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px;margin-top:8px;border-left:2px solid #e87722;}
-.forum-reply-auth{font-size:11px;font-weight:500;margin-bottom:3px;}
-.forum-reply-text{font-size:12px;color:var(--color-text-secondary);line-height:1.5;}
-.forum-action-btn{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--color-text-secondary);cursor:pointer;padding:4px 8px;border-radius:5px;border:0.5px solid var(--color-border-tertiary);background:transparent;margin-right:6px;}
-.forum-action-btn:hover{background:var(--color-background-secondary);}
+    .avatar-sm {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #0d2b5e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 500;
+      color: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
 
-/* TOAST */
-.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(60px);background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:10px 16px;font-size:12px;font-weight:500;box-shadow:0 4px 20px rgba(0,0,0,.12);display:flex;align-items:center;gap:8px;opacity:0;transition:all .3s;pointer-events:none;z-index:9999;}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-.toast i{color:#22c55e;}
+    .body {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
 
-/* SUBMIT MODAL */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:1000;display:none;align-items:center;justify-content:center;}
-.modal-overlay.open{display:flex;}
-.modal{background:var(--color-background-primary);border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);padding:24px;width:340px;box-shadow:0 8px 32px rgba(0,0,0,.18);}
-.modal-title{font-size:15px;font-weight:500;margin-bottom:6px;}
-.modal-sub{font-size:12px;color:var(--color-text-secondary);margin-bottom:16px;line-height:1.55;}
-.modal-dropzone{border:1.5px dashed var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:24px;text-align:center;cursor:pointer;margin-bottom:14px;transition:border-color .2s;}
-.modal-dropzone:hover{border-color:#e87722;}
-.modal-dropzone i{font-size:28px;color:var(--color-text-tertiary);display:block;margin-bottom:8px;}
-.modal-dropzone-text{font-size:12px;color:var(--color-text-secondary);}
-.modal-dropzone-hint{font-size:11px;color:var(--color-text-tertiary);margin-top:3px;}
-.modal-file-preview{display:none;align-items:center;gap:8px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px;margin-bottom:14px;font-size:11px;}
-.modal-file-preview.has-file{display:flex;}
-.modal-file-name{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--color-text-secondary);}
-.modal-file-remove{color:var(--color-text-danger);cursor:pointer;font-size:15px;line-height:1;}
-.modal-actions{display:flex;gap:8px;justify-content:flex-end;}
-.btn-cancel{background:transparent;border:0.5px solid var(--color-border-tertiary);padding:7px 14px;border-radius:6px;font-size:12px;cursor:pointer;color:var(--color-text-secondary);}
-.btn-cancel:hover{background:var(--color-background-secondary);}
-.btn-submit{background:#e87722;color:#fff;border:none;padding:7px 16px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;}
-.btn-submit:disabled{opacity:.5;cursor:not-allowed;}
-.btn-submit:not(:disabled):hover{opacity:.85;}
+    .sidebar {
+      width: 180px;
+      flex-shrink: 0;
+      background: var(--color-background-primary);
+      border-right: 0.5px solid var(--color-border-tertiary);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      padding: 12px 0;
+    }
 
-/* INBOX QUICK */
-.inbox-item{padding:9px 0;border-bottom:0.5px solid var(--color-border-tertiary);cursor:pointer;}
-.inbox-item:last-child{border:none;}
-.inbox-from{font-size:11px;color:var(--color-text-info);font-weight:500;margin-bottom:1px;}
-.inbox-subj{font-size:12px;font-weight:500;}
-.inbox-prev{font-size:11px;color:var(--color-text-tertiary);}
-.inbox-time{font-size:10px;color:var(--color-text-tertiary);font-family:var(--font-mono);margin-top:1px;}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-</style>
+    .user-chip {
+      margin: 0 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px;
+      border-radius: var(--border-radius-md);
+      background: var(--color-background-secondary);
+      border: 0.5px solid var(--color-border-tertiary);
+    }
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+    .user-av {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #0d2b5e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 500;
+      color: #fff;
+      flex-shrink: 0;
+    }
 
-<div class="app">
-  <!-- TOPBAR -->
-  <header class="topbar">
-    <div class="topbar-logo">
-      <div class="logo-mark">BINUS<span>maya</span></div>
-    </div>
-    <div class="topbar-section" id="topbar-label">My Dashboard</div>
-    <div class="topbar-right">
-      <button class="icon-btn" title="Notifications" aria-label="Notifications" onclick="showPage('announcements', document.querySelectorAll('.nav-link')[3], 'Announcements')">
-        <i class="ti ti-bell" aria-hidden="true"></i>
-        <span class="badge-dot"></span>
-      </button>
-      <div class="avatar-sm">JD</div>
-    </div>
-  </header>
+    .user-name {
+      font-size: 12px;
+      font-weight: 500;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
 
-  <div class="body">
-    <!-- FLAT SIDEBAR: only essential links -->
-    <nav class="sidebar">
-      <div class="user-chip">
-        <div class="user-av">JD</div>
-        <div>
-          <div class="user-name">Jane Doe</div>
-          <div class="user-role">Student · BINUS</div>
-        </div>
+    .user-role {
+      font-size: 10px;
+      color: var(--color-text-secondary);
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      cursor: pointer;
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      transition: background .15s;
+      position: relative;
+    }
+
+    .nav-link:hover {
+      background: var(--color-background-secondary);
+      color: var(--color-text-primary);
+    }
+
+    .nav-link.active {
+      color: #e87722;
+      font-weight: 500;
+      background: rgba(232, 119, 34, 0.08);
+    }
+
+    .nav-link.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2.5px;
+      background: #e87722;
+      border-radius: 0 2px 2px 0;
+    }
+
+    .nav-link i {
+      font-size: 15px;
+      width: 18px;
+      text-align: center;
+    }
+
+    .nav-nbadge {
+      margin-left: auto;
+      font-size: 9px;
+      font-weight: 600;
+      background: var(--color-background-danger);
+      color: var(--color-text-danger);
+      padding: 1px 5px;
+      border-radius: 9px;
+    }
+
+    .main {
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .page {
+      display: none;
+      padding: 20px;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .hero {
+      border-radius: var(--border-radius-lg);
+      background: linear-gradient(120deg, #0d2b5e 0%, #1a4080 60%, #8b2500 100%);
+      padding: 22px 24px;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      right: -40px;
+      top: -40px;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .hero-greet {
+      color: rgba(255, 255, 255, 0.55);
+      font-size: 12px;
+    }
+
+    .hero-name {
+      color: #fff;
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: -0.3px;
+      margin-top: 2px;
+    }
+
+    .hero-card {
+      background: rgba(255, 255, 255, 0.1);
+      border: 0.5px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--border-radius-md);
+      padding: 12px 16px;
+      text-align: right;
+      z-index: 1;
+    }
+
+    .hero-card-lbl {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.45);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 5px;
+    }
+
+    .hero-class {
+      font-size: 12px;
+      font-weight: 500;
+      color: #fff;
+    }
+
+    .hero-class-sub {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.55);
+      margin-top: 1px;
+    }
+
+    .hero-time {
+      font-size: 11px;
+      color: #e87722;
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    .hero-open {
+      margin-top: 8px;
+      background: #e87722;
+      color: #fff;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .card {
+      background: var(--color-background-primary);
+      border-radius: var(--border-radius-lg);
+      border: 0.5px solid var(--color-border-tertiary);
+      padding: 16px;
+    }
+
+    .card-hd {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .card-title {
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .card-more {
+      font-size: 11px;
+      color: #e87722;
+      cursor: pointer;
+    }
+
+    .sec-hd {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .sec-title {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .course-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .course-card {
+      background: var(--color-background-primary);
+      border-radius: var(--border-radius-lg);
+      border: 0.5px solid var(--color-border-tertiary);
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color .2s;
+      display: flex;
+      align-items: stretch;
+    }
+
+    .course-card:hover {
+      border-color: #e87722;
+    }
+
+    .cc-stripe {
+      width: 5px;
+      flex-shrink: 0;
+    }
+
+    .cc-calc .cc-stripe {
+      background: #0d2b5e;
+    }
+
+    .cc-ai .cc-stripe {
+      background: #0e2e1a;
+    }
+
+    .cc-bio .cc-stripe {
+      background: #1e1040;
+    }
+
+    .cc-info {
+      flex: 1;
+      padding: 14px 16px;
+    }
+
+    .cc-code {
+      font-size: 10px;
+      color: var(--color-text-tertiary);
+      font-family: var(--font-mono);
+      margin-bottom: 2px;
+    }
+
+    .cc-name {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    .cc-meta {
+      display: flex;
+      gap: 12px;
+    }
+
+    .cc-meta-item {
+      font-size: 11px;
+      color: var(--color-text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .prog-bar {
+      height: 4px;
+      background: var(--color-background-secondary);
+      border-radius: 2px;
+      overflow: hidden;
+      margin: 8px 0 0;
+    }
+
+    .prog-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: #e87722;
+    }
+
+    .cc-pct {
+      font-size: 11px;
+      font-weight: 500;
+      color: #e87722;
+      margin-top: 4px;
+    }
+
+    .cc-arrow {
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      color: var(--color-text-tertiary);
+      font-size: 16px;
+    }
+
+    .asgn-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 0.5px solid var(--color-border-tertiary);
+    }
+
+    .asgn-item:last-child {
+      border: none;
+    }
+
+    .asgn-ic {
+      width: 34px;
+      height: 34px;
+      border-radius: var(--border-radius-md);
+      background: rgba(232, 119, 34, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #e87722;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .asgn-ic.late {
+      background: var(--color-background-danger);
+      color: var(--color-text-danger);
+    }
+
+    .asgn-t {
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .asgn-s {
+      font-size: 11px;
+      color: var(--color-text-secondary);
+      margin-top: 1px;
+    }
+
+    .asgn-tag {
+      margin-left: auto;
+      font-size: 10px;
+      font-weight: 500;
+      color: #e87722;
+      background: rgba(232, 119, 34, 0.08);
+      padding: 3px 7px;
+      border-radius: 4px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .asgn-tag.late {
+      color: var(--color-text-danger);
+      background: var(--color-background-danger);
+    }
+
+    .asgn-open-btn {
+      margin-left: 8px;
+      background: transparent;
+      border: 0.5px solid var(--color-border-tertiary);
+      color: var(--color-text-secondary);
+      font-size: 11px;
+      padding: 4px 9px;
+      border-radius: 5px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .asgn-open-btn:hover {
+      background: var(--color-background-secondary);
+    }
+
+    .ann-item {
+      padding: 12px 0;
+      border-bottom: 0.5px solid var(--color-border-tertiary);
+      cursor: pointer;
+    }
+
+    .ann-item:last-child {
+      border: none;
+    }
+
+    .ann-dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #e87722;
+      margin-right: 6px;
+      flex-shrink: 0;
+    }
+
+    .ann-title {
+      font-size: 13px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      margin-bottom: 3px;
+    }
+
+    .ann-from {
+      font-size: 11px;
+      color: var(--color-text-secondary);
+    }
+
+    .ann-time {
+      font-size: 10px;
+      color: var(--color-text-tertiary);
+      margin-top: 2px;
+    }
+
+    .ann-body {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      margin-top: 6px;
+      line-height: 1.55;
+    }
+
+    .cd-back {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      margin-bottom: 14px;
+      padding: 4px 0;
+    }
+
+    .cd-back:hover {
+      color: var(--color-text-primary);
+    }
+
+    .cd-header {
+      background: var(--color-background-primary);
+      border-radius: var(--border-radius-lg);
+      border: 0.5px solid var(--color-border-tertiary);
+      padding: 18px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .cd-badge {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--border-radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .cd-title {
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    .cd-sub {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      margin-top: 3px;
+    }
+
+    .cd-tabs {
+      display: flex;
+      gap: 2px;
+      margin-bottom: 14px;
+      border-bottom: 0.5px solid var(--color-border-tertiary);
+    }
+
+    .cd-tab {
+      padding: 8px 16px;
+      font-size: 13px;
+      cursor: pointer;
+      color: var(--color-text-secondary);
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      background: transparent;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+    }
+
+    .cd-tab.active {
+      color: #e87722;
+      border-bottom-color: #e87722;
+      font-weight: 500;
+    }
+
+    .session-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .sess-card {
+      background: var(--color-background-primary);
+      border-radius: var(--border-radius-lg);
+      border: 0.5px solid var(--color-border-tertiary);
+      padding: 14px 16px;
+    }
+
+    .sess-card.current {
+      border-color: #e87722;
+      background: rgba(232, 119, 34, 0.04);
+    }
+
+    .sess-hd {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sess-num {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--border-radius-md);
+      background: var(--color-background-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      flex-shrink: 0;
+    }
+
+    .sess-card.current .sess-num {
+      background: #e87722;
+      color: #fff;
+    }
+
+    .sess-title {
+      font-size: 13px;
+      font-weight: 500;
+      flex: 1;
+    }
+
+    .sess-badge {
+      font-size: 10px;
+      font-weight: 500;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: rgba(232, 119, 34, 0.1);
+      color: #e87722;
+    }
+
+    .sess-badge.done {
+      background: var(--color-background-success);
+      color: var(--color-text-success);
+    }
+
+    .sess-badge.upcoming {
+      background: var(--color-background-secondary);
+      color: var(--color-text-secondary);
+    }
+
+    .sess-resources {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 0.5px solid var(--color-border-tertiary);
+      flex-wrap: wrap;
+    }
+
+    .res-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      color: var(--color-text-secondary);
+      padding: 5px 10px;
+      border-radius: 5px;
+      border: 0.5px solid var(--color-border-tertiary);
+      background: transparent;
+      cursor: pointer;
+      transition: all .15s;
+    }
+
+    .res-btn:hover {
+      border-color: #e87722;
+      color: #e87722;
+    }
+
+    .forum-compose {
+      background: var(--color-background-primary);
+      border: 0.5px solid var(--color-border-tertiary);
+      border-radius: var(--border-radius-lg);
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+
+    .forum-compose-title {
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    .compose-input {
+      width: 100%;
+      border: 0.5px solid var(--color-border-tertiary);
+      border-radius: var(--border-radius-md);
+      padding: 8px 10px;
+      font-size: 12px;
+      background: var(--color-background-secondary);
+      color: var(--color-text-primary);
+      resize: none;
+      font-family: inherit;
+    }
+
+    .compose-input:focus {
+      outline: none;
+      border-color: #e87722;
+    }
+
+    .compose-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .compose-submit {
+      margin-left: auto;
+      background: #e87722;
+      color: #fff;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .forum-post {
+      background: var(--color-background-primary);
+      border: 0.5px solid var(--color-border-tertiary);
+      border-radius: var(--border-radius-lg);
+      padding: 14px;
+      margin-bottom: 10px;
+    }
+
+    .forum-post-hd {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .forum-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 500;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .forum-author {
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .forum-time {
+      font-size: 11px;
+      color: var(--color-text-tertiary);
+    }
+
+    .forum-body {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .forum-reply {
+      background: var(--color-background-secondary);
+      border-radius: var(--border-radius-md);
+      padding: 10px;
+      margin-top: 8px;
+      border-left: 2px solid #e87722;
+    }
+
+    .forum-reply-auth {
+      font-size: 11px;
+      font-weight: 500;
+      margin-bottom: 3px;
+    }
+
+    .forum-reply-text {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+    }
+
+    .forum-action-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 5px;
+      border: 0.5px solid var(--color-border-tertiary);
+      background: transparent;
+      margin-right: 6px;
+    }
+
+    .forum-action-btn:hover {
+      background: var(--color-background-secondary);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(60px);
+      background: var(--color-background-primary);
+      border: 0.5px solid var(--color-border-tertiary);
+      border-radius: var(--border-radius-lg);
+      padding: 10px 16px;
+      font-size: 12px;
+      font-weight: 500;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, .12);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      transition: all .3s;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .toast i {
+      color: #22c55e;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .45);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal {
+      background: #ffffff;
+      border-radius: var(--border-radius-lg);
+      border: 0.5px solid var(--color-border-tertiary);
+      padding: 24px;
+      width: 340px;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, .25);
+    }
+
+    .modal-title {
+      font-size: 15px;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    .modal-sub {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      margin-bottom: 16px;
+      line-height: 1.55;
+    }
+
+    .modal-dropzone {
+      border: 1.5px dashed var(--color-border-tertiary);
+      border-radius: var(--border-radius-md);
+      padding: 24px;
+      text-align: center;
+      cursor: pointer;
+      margin-bottom: 14px;
+    }
+
+    .modal-dropzone:hover {
+      border-color: #e87722;
+    }
+
+    .modal-dropzone i {
+      font-size: 28px;
+      color: var(--color-text-tertiary);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .modal-dropzone-text {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+    }
+
+    .modal-dropzone-hint {
+      font-size: 11px;
+      color: var(--color-text-tertiary);
+      margin-top: 3px;
+    }
+
+    .modal-file-preview {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      background: var(--color-background-secondary);
+      border-radius: var(--border-radius-md);
+      padding: 8px 10px;
+      margin-bottom: 14px;
+      font-size: 11px;
+    }
+
+    .modal-file-preview.has-file {
+      display: flex;
+    }
+
+    .modal-file-name {
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--color-text-secondary);
+    }
+
+    .modal-file-remove {
+      color: var(--color-text-danger);
+      cursor: pointer;
+      font-size: 15px;
+      line-height: 1;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .btn-cancel {
+      background: transparent;
+      border: 0.5px solid var(--color-border-tertiary);
+      padding: 7px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+      color: var(--color-text-secondary);
+    }
+
+    .btn-cancel:hover {
+      background: var(--color-background-secondary);
+    }
+
+    .btn-submit {
+      background: #e87722;
+      color: #fff;
+      border: none;
+      padding: 7px 16px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .btn-submit:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    .g2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="topbar-logo">
+        <div class="logo-mark">BINUS<span>maya</span></div>
       </div>
-      <div class="nav-link active" onclick="showPage('dashboard',this,'My Dashboard')"><i class="ti ti-layout-dashboard" aria-hidden="true"></i> Dashboard</div>
-      <div class="nav-link" onclick="showPage('courses',this,'My Courses')"><i class="ti ti-books" aria-hidden="true"></i> Courses</div>
-      <div class="nav-link" onclick="showPage('assignments',this,'Assignments')"><i class="ti ti-clipboard-check" aria-hidden="true"></i> Assignments <span class="nav-nbadge">4</span></div>
-      <div class="nav-link" onclick="showPage('announcements',this,'Announcements')"><i class="ti ti-speakerphone" aria-hidden="true"></i> Announcements <span class="nav-nbadge">3</span></div>
-    </nav>
-
-    <main class="main">
-
-      <!-- DASHBOARD -->
-      <div class="page active" id="page-dashboard">
-        <div class="hero">
+      <div class="topbar-section" id="topbar-label">My Dashboard</div>
+      <div class="topbar-right">
+        <button class="icon-btn"
+          onclick="showPage('announcements',document.querySelectorAll('.nav-link')[3],'Announcements')">
+          <i class="ti ti-bell"></i><span class="badge-dot"></span>
+        </button>
+        <div class="avatar-sm">JD</div>
+      </div>
+    </header>
+    <div class="body">
+      <nav class="sidebar">
+        <div class="user-chip">
+          <div class="user-av">JD</div>
           <div>
-            <div class="hero-greet">Good Afternoon,</div>
-            <div class="hero-name">Jane Doe</div>
-          </div>
-          <div class="hero-card">
-            <div class="hero-card-lbl">Upcoming Onsite Class</div>
-            <div class="hero-class">LD01 - LEC · Mobile Hybrid Solution</div>
-            <div class="hero-class-sub">Room A1901 · Alam Sutera Main Campus</div>
-            <div class="hero-time"><i class="ti ti-clock" style="font-size:11px;" aria-hidden="true"></i> 21 May 2026, 15:20 GMT+7</div>
-            <button class="hero-open">Open →</button>
+            <div class="user-name">Jane Doe</div>
+            <div class="user-role">Student · BINUS</div>
           </div>
         </div>
-
-        <div class="sec-hd"><div class="sec-title">My Courses</div><span class="card-more" onclick="showPage('courses',document.querySelectorAll('.nav-link')[1],'My Courses')">View all →</span></div>
-        <div class="course-list" style="margin-bottom:18px;">
-          <div class="course-card cc-calc" onclick="showCourse('calc')">
-            <div class="cc-stripe"></div>
-            <div class="cc-info">
-              <div class="cc-code">MATH2032001</div>
-              <div class="cc-name">Calculus</div>
-              <div class="cc-meta"><div class="cc-meta-item"><i class="ti ti-calendar" aria-hidden="true"></i> Sess 10/26</div><div class="cc-meta-item"><i class="ti ti-user" aria-hidden="true"></i> Dr. Hendro</div></div>
-              <div class="prog-bar"><div class="prog-fill" style="width:42%"></div></div>
-              <div class="cc-pct">42% complete</div>
+        <div class="nav-link active" onclick="showPage('dashboard',this,'My Dashboard')"><i
+            class="ti ti-layout-dashboard"></i> Dashboard</div>
+        <div class="nav-link" onclick="showPage('courses',this,'My Courses')"><i class="ti ti-books"></i> Courses</div>
+        <div class="nav-link" onclick="showPage('assignments',this,'Assignments')"><i class="ti ti-clipboard-check"></i>
+          Assignments <span class="nav-nbadge">4</span></div>
+        <div class="nav-link" onclick="showPage('announcements',this,'Announcements')"><i
+            class="ti ti-speakerphone"></i> Announcements <span class="nav-nbadge">3</span></div>
+      </nav>
+      <main class="main">
+        <!-- DASHBOARD -->
+        <div class="page active" id="page-dashboard">
+          <div class="hero">
+            <div>
+              <div class="hero-greet">Good Afternoon,</div>
+              <div class="hero-name">Jane Doe</div>
             </div>
-            <div class="cc-arrow"><i class="ti ti-chevron-right" aria-hidden="true"></i></div>
+            <div class="hero-card">
+              <div class="hero-card-lbl">Upcoming Onsite Class</div>
+              <div class="hero-class">LD01 - LEC · Mobile Hybrid Solution</div>
+              <div class="hero-class-sub">Room A1901 · Alam Sutera Main Campus</div>
+              <div class="hero-time"><i class="ti ti-clock" style="font-size:11px;"></i> 21 May 2026, 15:20 GMT+7</div>
+              <button class="hero-open">Open →</button>
+            </div>
           </div>
-          <div class="course-card cc-ai" onclick="showCourse('ai')">
-            <div class="cc-stripe"></div>
-            <div class="cc-info">
-              <div class="cc-code">COMP6048001</div>
-              <div class="cc-name">Artificial Intelligence</div>
-              <div class="cc-meta"><div class="cc-meta-item"><i class="ti ti-calendar" aria-hidden="true"></i> Sess 10/16</div><div class="cc-meta-item"><i class="ti ti-user" aria-hidden="true"></i> Dr. Anderies</div></div>
-              <div class="prog-bar"><div class="prog-fill" style="width:63%;background:#22c55e;"></div></div>
-              <div class="cc-pct" style="color:#22c55e;">63% complete</div>
-            </div>
-            <div class="cc-arrow"><i class="ti ti-chevron-right" aria-hidden="true"></i></div>
+          <div class="sec-hd">
+            <div class="sec-title">My Courses</div><span class="card-more"
+              onclick="showPage('courses',document.querySelectorAll('.nav-link')[1],'My Courses')">View all →</span>
           </div>
-          <div class="course-card cc-bio" onclick="showCourse('bio')">
-            <div class="cc-stripe"></div>
-            <div class="cc-info">
-              <div class="cc-code">SCIE6062001</div>
-              <div class="cc-name">Computational Biology</div>
-              <div class="cc-meta"><div class="cc-meta-item"><i class="ti ti-calendar" aria-hidden="true"></i> Sess 10/26</div><div class="cc-meta-item"><i class="ti ti-user" aria-hidden="true"></i> Dr. Rina</div></div>
-              <div class="prog-bar"><div class="prog-fill" style="width:28%;background:#a855f7;"></div></div>
-              <div class="cc-pct" style="color:#a855f7;">28% complete</div>
+          <div class="course-list" style="margin-bottom:18px;">
+            <div class="course-card cc-calc" onclick="showCourse('calc')">
+              <div class="cc-stripe"></div>
+              <div class="cc-info">
+                <div class="cc-code">MATH2032001</div>
+                <div class="cc-name">Calculus</div>
+                <div class="cc-meta">
+                  <div class="cc-meta-item"><i class="ti ti-calendar"></i> Sess 10/26</div>
+                  <div class="cc-meta-item"><i class="ti ti-user"></i> Dr. Hendro</div>
+                </div>
+                <div class="prog-bar">
+                  <div class="prog-fill" style="width:42%"></div>
+                </div>
+                <div class="cc-pct">42% complete</div>
+              </div>
+              <div class="cc-arrow"><i class="ti ti-chevron-right"></i></div>
             </div>
-            <div class="cc-arrow"><i class="ti ti-chevron-right" aria-hidden="true"></i></div>
+            <div class="course-card cc-ai" onclick="showCourse('ai')">
+              <div class="cc-stripe"></div>
+              <div class="cc-info">
+                <div class="cc-code">COMP6048001</div>
+                <div class="cc-name">Artificial Intelligence</div>
+                <div class="cc-meta">
+                  <div class="cc-meta-item"><i class="ti ti-calendar"></i> Sess 10/16</div>
+                  <div class="cc-meta-item"><i class="ti ti-user"></i> Dr. Anderies</div>
+                </div>
+                <div class="prog-bar">
+                  <div class="prog-fill" style="width:63%;background:#22c55e;"></div>
+                </div>
+                <div class="cc-pct" style="color:#22c55e;">63% complete</div>
+              </div>
+              <div class="cc-arrow"><i class="ti ti-chevron-right"></i></div>
+            </div>
+            <div class="course-card cc-bio" onclick="showCourse('bio')">
+              <div class="cc-stripe"></div>
+              <div class="cc-info">
+                <div class="cc-code">SCIE6062001</div>
+                <div class="cc-name">Computational Biology</div>
+                <div class="cc-meta">
+                  <div class="cc-meta-item"><i class="ti ti-calendar"></i> Sess 10/26</div>
+                  <div class="cc-meta-item"><i class="ti ti-user"></i> Dr. Rina</div>
+                </div>
+                <div class="prog-bar">
+                  <div class="prog-fill" style="width:28%;background:#a855f7;"></div>
+                </div>
+                <div class="cc-pct" style="color:#a855f7;">28% complete</div>
+              </div>
+              <div class="cc-arrow"><i class="ti ti-chevron-right"></i></div>
+            </div>
+          </div>
+          <div class="g2">
+            <div class="card">
+              <div class="card-hd">
+                <div class="card-title">Upcoming Assignments</div><span class="card-more"
+                  onclick="showPage('assignments',document.querySelectorAll('.nav-link')[2],'Assignments')">See all
+                  →</span>
+              </div>
+              <div class="asgn-item">
+                <div class="asgn-ic late"><i class="ti ti-pencil"></i></div>
+                <div>
+                  <div class="asgn-t">Assignment 3</div>
+                  <div class="asgn-s">Computational Biology</div>
+                </div>
+                <div class="asgn-tag late">Overdue</div>
+              </div>
+              <div class="asgn-item">
+                <div class="asgn-ic"><i class="ti ti-file-description"></i></div>
+                <div>
+                  <div class="asgn-t">Article Resource</div>
+                  <div class="asgn-s">Mobile Hybrid Solution</div>
+                </div>
+                <div class="asgn-tag">1h 30m</div>
+              </div>
+              <div class="asgn-item">
+                <div class="asgn-ic"><i class="ti ti-pencil"></i></div>
+                <div>
+                  <div class="asgn-t">Quiz 3</div>
+                  <div class="asgn-s">Calculus</div>
+                </div>
+                <div class="asgn-tag">3 days</div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-hd">
+                <div class="card-title">Announcements</div><span class="card-more"
+                  onclick="showPage('announcements',document.querySelectorAll('.nav-link')[3],'Announcements')">See all
+                  →</span>
+              </div>
+              <div class="ann-item" onclick="hAnnounceClick(this,'midterm')">
+                <div class="ann-title"><span class="ann-dot"></span>Midterm Exam Schedule</div>
+                <div class="ann-from">Academic Office</div>
+                <div class="ann-time">Today, 09:00</div>
+                <div class="ann-body" style="display:none;">The midterm exam schedule for the 2025 Even Semester has
+                  been released. Please check the academic portal for your individual schedule. Exams will be held from
+                  2–6 June 2026.</div>
+              </div>
+              <div class="ann-item" onclick="hAnnounceClick(this,'other')">
+                <div class="ann-title">Assignment 3 Extension</div>
+                <div class="ann-from">Dr. Rina · Comp. Biology</div>
+                <div class="ann-time">Yesterday, 14:30</div>
+                <div class="ann-body" style="display:none;">Due to the lab system maintenance last week, Assignment 3
+                  deadline has been extended to Friday, 30 May 2026 at 23:59.</div>
+              </div>
+              <div class="ann-item" onclick="hAnnounceClick(this,'other')">
+                <div class="ann-title">Campus Closure Notice</div>
+                <div class="ann-from">BINUS University</div>
+                <div class="ann-time">Mon, 08:00</div>
+                <div class="ann-body" style="display:none;">The Alam Sutera campus will be closed on 2 June 2026 for the
+                  National Holiday.</div>
+              </div>
+            </div>
           </div>
         </div>
-
-        <div class="g2">
+        <!-- COURSES -->
+        <div class="page" id="page-courses">
+          <div class="sec-hd">
+            <div class="sec-title">My Courses — 2025, Even Semester</div>
+          </div>
+          <div class="course-list">
+            <div class="course-card cc-calc" onclick="showCourse('calc')">
+              <div class="cc-stripe"></div>
+              <div class="cc-info">
+                <div class="cc-code">MATH2032001 · Credit 3/1</div>
+                <div class="cc-name">Calculus</div>
+                <div class="cc-meta">
+                  <div class="cc-meta-item"><i class="ti ti-users"></i> 3 facilitators</div>
+                  <div class="cc-meta-item"><i class="ti ti-calendar"></i> Sess 10/26</div>
+                </div>
+                <div class="prog-bar">
+                  <div class="prog-fill" style="width:42%"></div>
+                </div>
+                <div class="cc-pct">42% complete</div>
+              </div>
+              <div class="cc-arrow"><i class="ti ti-chevron-right"></i></div>
+            </div>
+            <div class="course-card cc-ai" onclick="showCourse('ai')">
+              <div class="cc-stripe"></div>
+              <div class="cc-info">
+                <div class="cc-code">COMP6048001 · Credit 3/1</div>
+                <div class="cc-name">Artificial Intelligence</div>
+                <div class="cc-meta">
+                  <div class="cc-meta-item"><i class="ti ti-users"></i> 2 facilitators</div>
+                  <div class="cc-meta-item"><i class="ti ti-calendar"></i> Sess 10/16</div>
+                </div>
+                <div class="prog-bar">
+                  <div class="prog-fill" style="width:63%;background:#22c55e;"></div>
+                </div>
+                <div class="cc-pct" style="color:#22c55e;">63% complete</div>
+              </div>
+              <div class="cc-arrow"><i class="ti ti-chevron-right"></i></div>
+            </div>
+            <div class="course-card cc-bio" onclick="showCourse('bio')">
+              <div class="cc-stripe"></div>
+              <div class="cc-info">
+                <div class="cc-code">SCIE6062001 · Credit 2/1</div>
+                <div class="cc-name">Computational Biology</div>
+                <div class="cc-meta">
+                  <div class="cc-meta-item"><i class="ti ti-users"></i> 3 facilitators</div>
+                  <div class="cc-meta-item"><i class="ti ti-calendar"></i> Sess 10/26</div>
+                </div>
+                <div class="prog-bar">
+                  <div class="prog-fill" style="width:28%;background:#a855f7;"></div>
+                </div>
+                <div class="cc-pct" style="color:#a855f7;">28% complete</div>
+              </div>
+              <div class="cc-arrow"><i class="ti ti-chevron-right"></i></div>
+            </div>
+          </div>
+        </div>
+        <!-- ASSIGNMENTS -->
+        <div class="page" id="page-assignments">
+          <div class="sec-hd">
+            <div class="sec-title">Assignments</div>
+          </div>
+          <div class="card" style="margin-bottom:12px;">
+            <div class="card-title"
+              style="margin-bottom:12px;font-size:12px;font-weight:500;color:var(--color-text-danger);">⚠ Overdue</div>
+            <div class="asgn-item" style="padding-top:0;">
+              <div class="asgn-ic late"><i class="ti ti-pencil"></i></div>
+              <div>
+                <div class="asgn-t">Assignment 3</div>
+                <div class="asgn-s">Session 9 · Computational Biology</div>
+              </div>
+              <div class="asgn-tag late">Overdue</div>
+              <button class="asgn-open-btn" onclick="openSubmitModal('Assignment 3','bio')">Submit →</button>
+            </div>
+          </div>
           <div class="card">
-            <div class="card-hd"><div class="card-title">Upcoming Assignments</div><span class="card-more" onclick="showPage('assignments',document.querySelectorAll('.nav-link')[2],'Assignments')">See all →</span></div>
-            <div class="asgn-item"><div class="asgn-ic late"><i class="ti ti-pencil" aria-hidden="true"></i></div><div><div class="asgn-t">Assignment 3</div><div class="asgn-s">Computational Biology</div></div><div class="asgn-tag late">Overdue</div></div>
-            <div class="asgn-item"><div class="asgn-ic"><i class="ti ti-file-description" aria-hidden="true"></i></div><div><div class="asgn-t">Article Resource</div><div class="asgn-s">Mobile Hybrid Solution</div></div><div class="asgn-tag">1h 30m</div></div>
-            <div class="asgn-item"><div class="asgn-ic"><i class="ti ti-pencil" aria-hidden="true"></i></div><div><div class="asgn-t">Quiz 3</div><div class="asgn-s">Calculus</div></div><div class="asgn-tag">3 days</div></div>
+            <div class="card-title"
+              style="margin-bottom:12px;font-size:12px;font-weight:500;color:var(--color-text-secondary);">Upcoming
+            </div>
+            <div class="asgn-item" style="padding-top:0;">
+              <div class="asgn-ic"><i class="ti ti-file-description"></i></div>
+              <div>
+                <div class="asgn-t">Complete article resource</div>
+                <div class="asgn-s">Session 10 · Mobile Hybrid Solution</div>
+              </div>
+              <div class="asgn-tag">1h 30m</div>
+              <button class="asgn-open-btn" onclick="openSubmitModal('Article Resource','other')">Submit →</button>
+            </div>
+            <div class="asgn-item">
+              <div class="asgn-ic"><i class="ti ti-link"></i></div>
+              <div>
+                <div class="asgn-t">Complete link resource</div>
+                <div class="asgn-s">Session 10 · Artificial Intelligence</div>
+              </div>
+              <div class="asgn-tag">1h 30m</div>
+              <button class="asgn-open-btn" onclick="openSubmitModal('Link Resource','other')">Submit →</button>
+            </div>
+            <div class="asgn-item">
+              <div class="asgn-ic"><i class="ti ti-pencil"></i></div>
+              <div>
+                <div class="asgn-t">Quiz 3</div>
+                <div class="asgn-s">Calculus</div>
+              </div>
+              <div class="asgn-tag">3 days</div>
+              <button class="asgn-open-btn" onclick="showToast('Opening quiz...')">Open →</button>
+            </div>
+          </div>
+        </div>
+        <!-- ANNOUNCEMENTS -->
+        <div class="page" id="page-announcements">
+          <div class="sec-hd">
+            <div class="sec-title">Announcements</div>
           </div>
           <div class="card">
-            <div class="card-hd"><div class="card-title">Announcements</div><span class="card-more" onclick="showPage('announcements',document.querySelectorAll('.nav-link')[3],'Announcements')">See all →</span></div>
-            <div class="ann-item"><div class="ann-title"><span class="ann-dot"></span>Midterm Exam Schedule</div><div class="ann-from">Academic Office</div><div class="ann-time">Today, 09:00</div></div>
-            <div class="ann-item"><div class="ann-title">Assignment 3 Extension</div><div class="ann-from">Dr. Rina · Comp. Biology</div><div class="ann-time">Yesterday, 14:30</div></div>
-            <div class="ann-item"><div class="ann-title">Campus Closure Notice</div><div class="ann-from">BINUS University</div><div class="ann-time">Mon, 08:00</div></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- COURSES LIST -->
-      <div class="page" id="page-courses">
-        <div class="sec-hd"><div class="sec-title">My Courses — 2025, Even Semester</div></div>
-        <div class="course-list">
-          <div class="course-card cc-calc" onclick="showCourse('calc')">
-            <div class="cc-stripe"></div>
-            <div class="cc-info">
-              <div class="cc-code">MATH2032001 · Credit 3/1</div>
-              <div class="cc-name">Calculus</div>
-              <div class="cc-meta"><div class="cc-meta-item"><i class="ti ti-users" aria-hidden="true"></i> 3 facilitators</div><div class="cc-meta-item"><i class="ti ti-calendar" aria-hidden="true"></i> Sess 10/26</div><div class="cc-meta-item"><i class="ti ti-microphone" aria-hidden="true"></i> LR01 - LEC</div></div>
-              <div class="prog-bar"><div class="prog-fill" style="width:42%"></div></div>
-              <div class="cc-pct">42% complete</div>
+            <!-- 'midterm' tag — only this one completes task 0 -->
+            <div class="ann-item" onclick="hAnnounceClick(this,'midterm')">
+              <div class="ann-title"><span class="ann-dot"></span>Midterm Exam Schedule Released</div>
+              <div class="ann-from">Academic Office · BINUS University</div>
+              <div class="ann-time">Today, 09:00</div>
+              <div class="ann-body" style="display:none;">The midterm exam schedule for the 2025 Even Semester has been
+                released. Please check the academic portal for your individual schedule. Exams will be held from 2–6
+                June 2026. Contact your faculty coordinator if you have conflicts.</div>
             </div>
-            <div class="cc-arrow"><i class="ti ti-chevron-right" aria-hidden="true"></i></div>
-          </div>
-          <div class="course-card cc-ai" onclick="showCourse('ai')">
-            <div class="cc-stripe"></div>
-            <div class="cc-info">
-              <div class="cc-code">COMP6048001 · Credit 3/1</div>
-              <div class="cc-name">Artificial Intelligence</div>
-              <div class="cc-meta"><div class="cc-meta-item"><i class="ti ti-users" aria-hidden="true"></i> 2 facilitators</div><div class="cc-meta-item"><i class="ti ti-calendar" aria-hidden="true"></i> Sess 10/16</div><div class="cc-meta-item"><i class="ti ti-microphone" aria-hidden="true"></i> LD01 - LEC</div></div>
-              <div class="prog-bar"><div class="prog-fill" style="width:63%;background:#22c55e;"></div></div>
-              <div class="cc-pct" style="color:#22c55e;">63% complete</div>
+            <div class="ann-item" onclick="hAnnounceClick(this,'other')">
+              <div class="ann-title">Assignment 3 Deadline Extension</div>
+              <div class="ann-from">Dr. Rina Susanti · Computational Biology</div>
+              <div class="ann-time">Yesterday, 14:30</div>
+              <div class="ann-body" style="display:none;">Due to the lab system maintenance last week, Assignment 3
+                deadline has been extended to Friday, 30 May 2026 at 23:59.</div>
             </div>
-            <div class="cc-arrow"><i class="ti ti-chevron-right" aria-hidden="true"></i></div>
-          </div>
-          <div class="course-card cc-bio" onclick="showCourse('bio')">
-            <div class="cc-stripe"></div>
-            <div class="cc-info">
-              <div class="cc-code">SCIE6062001 · Credit 2/1</div>
-              <div class="cc-name">Computational Biology</div>
-              <div class="cc-meta"><div class="cc-meta-item"><i class="ti ti-users" aria-hidden="true"></i> 3 facilitators</div><div class="cc-meta-item"><i class="ti ti-calendar" aria-hidden="true"></i> Sess 10/26</div><div class="cc-meta-item"><i class="ti ti-microphone" aria-hidden="true"></i> LR01 - LEC</div></div>
-              <div class="prog-bar"><div class="prog-fill" style="width:28%;background:#a855f7;"></div></div>
-              <div class="cc-pct" style="color:#a855f7;">28% complete</div>
+            <div class="ann-item" onclick="hAnnounceClick(this,'other')">
+              <div class="ann-title">Campus Closure — 2 June 2026</div>
+              <div class="ann-from">BINUS University Administration</div>
+              <div class="ann-time">Mon, 08:00</div>
+              <div class="ann-body" style="display:none;">The Alam Sutera campus will be closed on 2 June 2026 for the
+                National Holiday.</div>
             </div>
-            <div class="cc-arrow"><i class="ti ti-chevron-right" aria-hidden="true"></i></div>
+            <div class="ann-item" onclick="hAnnounceClick(this,'other')">
+              <div class="ann-title">New AI Lab Resources Available</div>
+              <div class="ann-from">Dr. Anderies · Artificial Intelligence</div>
+              <div class="ann-time">Sun, 16:45</div>
+              <div class="ann-body" style="display:none;">New supplementary resources for the Neural Networks topic have
+                been uploaded under Session 10 in the AI course.</div>
+            </div>
           </div>
         </div>
-      </div>
-
-      <!-- ASSIGNMENTS PAGE -->
-      <div class="page" id="page-assignments">
-        <div class="sec-hd"><div class="sec-title">Assignments</div></div>
-        <div class="card" style="margin-bottom:12px;">
-          <div class="card-title" style="margin-bottom:12px;font-size:12px;font-weight:500;color:var(--color-text-danger);">⚠ Overdue</div>
-          <div class="asgn-item" style="padding-top:0;">
-            <div class="asgn-ic late"><i class="ti ti-pencil" aria-hidden="true"></i></div>
-            <div><div class="asgn-t">Assignment 3</div><div class="asgn-s">Session 9 · Computational Biology</div></div>
-            <div class="asgn-tag late">Overdue</div>
-            <button class="asgn-open-btn" onclick="openSubmitModal('Assignment 3','Computational Biology')">Submit →</button>
+        <!-- COURSE DETAIL -->
+        <div class="page" id="page-course-detail">
+          <div class="cd-back" onclick="goBack()"><i class="ti ti-arrow-left"></i> Back</div>
+          <div class="cd-header" id="cd-header-content"></div>
+          <div class="cd-tabs">
+            <button class="cd-tab active" onclick="switchCourseTab('sessions',this)">Sessions</button>
+            <button class="cd-tab" onclick="switchCourseTab('forum',this)">Forum</button>
+            <button class="cd-tab" onclick="switchCourseTab('assignments',this)">Assignments</button>
           </div>
+          <div id="cd-body-wrap"></div>
         </div>
-        <div class="card">
-          <div class="card-title" style="margin-bottom:12px;font-size:12px;font-weight:500;color:var(--color-text-secondary);">Upcoming</div>
-          <div class="asgn-item" style="padding-top:0;">
-            <div class="asgn-ic"><i class="ti ti-file-description" aria-hidden="true"></i></div>
-            <div><div class="asgn-t">Complete article resource</div><div class="asgn-s">Session 10 · Mobile Hybrid Solution</div></div>
-            <div class="asgn-tag">1h 30m</div>
-            <button class="asgn-open-btn" onclick="openSubmitModal('Article Resource','Mobile Hybrid Solution')">Submit →</button>
-          </div>
-          <div class="asgn-item">
-            <div class="asgn-ic"><i class="ti ti-link" aria-hidden="true"></i></div>
-            <div><div class="asgn-t">Complete link resource</div><div class="asgn-s">Session 10 · Artificial Intelligence</div></div>
-            <div class="asgn-tag">1h 30m</div>
-            <button class="asgn-open-btn" onclick="openSubmitModal('Link Resource','Artificial Intelligence')">Submit →</button>
-          </div>
-          <div class="asgn-item">
-            <div class="asgn-ic"><i class="ti ti-pencil" aria-hidden="true"></i></div>
-            <div><div class="asgn-t">Quiz 3</div><div class="asgn-s">Calculus</div></div>
-            <div class="asgn-tag">3 days</div>
-            <button class="asgn-open-btn" onclick="showToast('Opening quiz...')">Open →</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- ANNOUNCEMENTS PAGE -->
-      <div class="page" id="page-announcements">
-        <div class="sec-hd"><div class="sec-title">Announcements</div></div>
-        <div class="card">
-          <div class="ann-item" onclick="hAnnounceClick(this)">
-            <div class="ann-title"><span class="ann-dot"></span>Midterm Exam Schedule Released</div>
-            <div class="ann-from">Academic Office · BINUS University</div>
-            <div class="ann-time">Today, 09:00</div>
-            <div class="ann-body" style="display:none;">The midterm exam schedule for the 2025 Even Semester has been released. Please check the academic portal for your individual schedule. Exams will be held from 2–6 June 2026. Contact your faculty coordinator if you have conflicts.</div>
-          </div>
-          <div class="ann-item" onclick="this.querySelector('.ann-body').style.display=this.querySelector('.ann-body').style.display==='block'?'none':'block'">
-            <div class="ann-title">Assignment 3 Deadline Extension</div>
-            <div class="ann-from">Dr. Rina Susanti · Computational Biology</div>
-            <div class="ann-time">Yesterday, 14:30</div>
-            <div class="ann-body" style="display:none;">Due to the lab system maintenance last week, Assignment 3 deadline has been extended to Friday, 30 May 2026 at 23:59. Please submit through the Assignments page. No further extensions will be granted.</div>
-          </div>
-          <div class="ann-item" onclick="this.querySelector('.ann-body').style.display=this.querySelector('.ann-body').style.display==='block'?'none':'block'">
-            <div class="ann-title">Campus Closure — 2 June 2026</div>
-            <div class="ann-from">BINUS University Administration</div>
-            <div class="ann-time">Mon, 08:00</div>
-            <div class="ann-body" style="display:none;">The Alam Sutera campus will be closed on 2 June 2026 for the National Holiday. All classes scheduled on that day will be moved online. Lecturers will communicate session links via this LMS.</div>
-          </div>
-          <div class="ann-item" onclick="this.querySelector('.ann-body').style.display=this.querySelector('.ann-body').style.display==='block'?'none':'block'">
-            <div class="ann-title">New AI Lab Resources Available</div>
-            <div class="ann-from">Dr. Anderies · Artificial Intelligence</div>
-            <div class="ann-time">Sun, 16:45</div>
-            <div class="ann-body" style="display:none;">New supplementary resources for the Neural Networks topic have been uploaded under Session 10 in the AI course. These include a video walkthrough and an interactive Python notebook.</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- COURSE DETAIL -->
-      <div class="page" id="page-course-detail">
-        <div class="cd-back" onclick="goBack()"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back</div>
-        <div class="cd-header" id="cd-header-content"></div>
-        <div class="cd-tabs" id="cd-tabs">
-          <button class="cd-tab active" onclick="switchCourseTab('sessions',this)">Sessions</button>
-          <button class="cd-tab" onclick="switchCourseTab('forum',this)">Forum</button>
-          <button class="cd-tab" onclick="switchCourseTab('assignments',this)">Assignments</button>
-        </div>
-        <div id="cd-body-wrap"></div>
-      </div>
-
-    </main>
-  </div>
-</div>
-
-<!-- SUBMIT MODAL -->
-<div class="modal-overlay" id="submit-modal">
-  <div class="modal">
-    <div class="modal-title" id="modal-title">Submit Assignment</div>
-    <div class="modal-sub" id="modal-sub">Upload your file below. Accepted formats: PDF, DOCX, ZIP.</div>
-    <div class="modal-dropzone" onclick="document.getElementById('file-input').click()">
-      <i class="ti ti-cloud-upload" aria-hidden="true"></i>
-      <div class="modal-dropzone-text">Click to upload or drag & drop</div>
-      <div class="modal-dropzone-hint">PDF, DOCX, ZIP · max 50 MB</div>
-    </div>
-    <input type="file" id="file-input" style="display:none" onchange="handleFileSelect(this)">
-    <div class="modal-file-preview" id="modal-file-preview">
-      <i class="ti ti-file" aria-hidden="true"></i>
-      <span class="modal-file-name" id="modal-file-name"></span>
-      <span class="modal-file-remove" onclick="clearFile()">×</span>
-    </div>
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-      <button class="btn-submit" id="modal-submit-btn" disabled onclick="submitAssignment()">Submit</button>
+      </main>
     </div>
   </div>
-</div>
 
-<div class="toast" id="toast"><i class="ti ti-circle-check" aria-hidden="true"></i><span id="toast-msg">Done</span></div>
-
-<script>
-const courses={
-  calc:{name:'Calculus',code:'MATH2032001',credit:'3/1',cls:'LR01 - LEC',bg:'#0d2b5e',icon:'ti-math-integral',progress:42,session:10,
-    sessions:[
-      {n:1,title:'Introduction to Limits',status:'done',resources:[{name:'Lecture Slides',icon:'ti-file-text'},{name:'Practice Set',icon:'ti-clipboard-list'}]},
-      {n:2,title:'Differentiation Basics',status:'done',resources:[{name:'Lecture Slides',icon:'ti-file-text'},{name:'Exercise PDF',icon:'ti-clipboard-list'}]},
-      {n:3,title:'Chain Rule',status:'done',resources:[{name:'Lecture Slides',icon:'ti-file-text'}]},
-      {n:4,title:'Implicit Differentiation',status:'done',resources:[{name:'Lecture Slides',icon:'ti-file-text'},{name:'Problem Set',icon:'ti-clipboard-list'}]},
-      {n:5,title:'Applications of Derivatives',status:'done',resources:[{name:'Lecture Slides',icon:'ti-file-text'}]},
-      {n:6,title:'Curve Sketching',status:'done',resources:[{name:'Lecture Slides',icon:'ti-file-text'},{name:'Practice Problems',icon:'ti-clipboard-list'}]},
-      {n:7,title:'Optimization',status:'done',resources:[{name:'Lecture Slides',icon:'ti-file-text'}]},
-      {n:8,title:'Integration Intro',status:'done',resources:[{name:'Lecture Slides',icon:'ti-file-text'},{name:'Formula Sheet',icon:'ti-file-description'}]},
-      {n:9,title:'Definite Integrals',status:'done',resources:[{name:'Lecture Slides',icon:'ti-file-text'},{name:'Assignment 3',icon:'ti-pencil'}]},
-      {n:10,title:'Derivatives Review',status:'current',resources:[{name:'Lecture Slides',icon:'ti-file-text'},{name:'Session Video',icon:'ti-video'},{name:'Practice Problems',icon:'ti-clipboard-list'}]},
-      {n:11,title:'Advanced Integration',status:'upcoming',resources:[]},
-      {n:12,title:'Series & Sequences',status:'upcoming',resources:[]},
-    ],
-    forum:[
-      {id:1,auth:'Dr. Hendro Djoko',init:'HD',color:'#0d2b5e',time:'Mon 09:00',body:'Selamat datang di forum Calculus Session 10! Silakan diskusikan materi Derivatives Review.',replies:[{auth:'Rania Kusuma',init:'RK',color:'#0d9488',time:'Mon 10:15',text:'Pak, boleh minta penjelasan lebih lanjut tentang chain rule pada fungsi komposit trigonometri?'}]},
-      {id:2,auth:'Farhan Adi',init:'FA',color:'#7c3aed',time:'Mon 14:20',body:'Ada yang bisa jelasin perbedaan explicit vs implicit differentiation?',replies:[{auth:'Dr. Hendro Djoko',init:'HD',color:'#0d2b5e',time:'Mon 15:00',text:'Explicit digunakan saat y bisa dinyatakan langsung sebagai fungsi x. Implicit digunakan saat hubungan x dan y tidak bisa dipisahkan dengan mudah.'}]},
-    ],
-    assignments:[
-      {name:'Quiz 1',course:'Calculus',due:'Completed',status:'done',score:'85/100'},
-      {name:'Quiz 2',course:'Calculus',due:'Completed',status:'done',score:'92/100'},
-      {name:'Assignment 1',course:'Calculus',due:'Completed',status:'done',score:'88/100'},
-      {name:'Assignment 2',course:'Calculus',due:'Completed',status:'done',score:'95/100'},
-      {name:'Quiz 3',course:'Calculus',due:'3 days',status:'upcoming',score:null},
-    ]
-  },
-  ai:{name:'Artificial Intelligence',code:'COMP6048001',credit:'3/1',cls:'LD01 - LEC',bg:'#0e2e1a',icon:'ti-cpu',progress:63,session:10,
-    sessions:[
-      {n:1,title:'Introduction to AI',status:'done',resources:[{name:'Lecture Slides',icon:'ti-file-text'}]},
-      {n:2,title:'Search Algorithms',status:'done',resources:[{name:'Lecture Slides',icon:'ti-file-text'},{name:'Problem Set',icon:'ti-clipboard-list'}]},
-      {n:3,title:'Knowledge Representation',status:'done',resources:[{name:'Lecture Slides',icon:'ti-file-text'}]},
-      {n:4,title:'Propositional Logic',status:'done',resources:[{name:'Lecture Slides',icon:'ti-file-text'},{name:'Exercise PDF',icon:'ti-clipboard-list'}]},
-      {n:5,title:'First-Order Logic',status:'done',resources:[{name:'Lecture Slides',icon:'ti-file-text'}]},
-      {n:6,title:'Planning',status:'done',resources:[{name:'Lecture Slides',icon:'ti-file-text'}]},
-      {n:7,title:'Machine Learning Intro',status:'done',resources:[{name:'Lecture Slides',icon:'ti-file-text'},{name:'Session Video',icon:'ti-video'}]},
-      {n:8,title:'Supervised Learning',status:'done',resources:[{name:'Lecture Slides',icon:'ti-file-text'}]},
-      {n:9,title:'Unsupervised Learning',status:'done',resources:[{name:'Lecture Slides',icon:'ti-file-text'},{name:'Assignment 2',icon:'ti-pencil'}]},
-      {n:10,title:'Neural Networks',status:'current',resources:[{name:'Lecture Slides',icon:'ti-file-text'},{name:'Session Video',icon:'ti-video'},{name:'Python Notebook',icon:'ti-code'}]},
-      {n:11,title:'Deep Learning',status:'upcoming',resources:[]},
-      {n:12,title:'Reinforcement Learning',status:'upcoming',resources:[]},
-    ],
-    forum:[
-      {id:1,auth:'Anderies, M.Kom.',init:'AN',color:'#0e2e1a',time:'Tue 08:00',body:'Forum Session 10: Neural Networks. Silakan diskusikan konsep perceptron, activation functions, dan backpropagation.',replies:[{auth:'Zahra Aini',init:'ZA',color:'#0d9488',time:'Tue 09:30',text:'Pak, untuk activation function ReLU, apakah ada kelemahan dibanding sigmoid?'}]},
-      {id:2,auth:'Bintang Nugraha',init:'BN',color:'#7c3aed',time:'Tue 11:00',body:'Sudah coba implementasi simple neural network pakai numpy. Ada yang mau collab buat tugas ini?',replies:[]},
-    ],
-    assignments:[
-      {name:'Quiz 1',course:'AI',due:'Completed',status:'done',score:'90/100'},
-      {name:'Assignment 1',course:'AI',due:'Completed',status:'done',score:'92/100'},
-      {name:'Assignment 2',course:'AI',due:'Completed',status:'done',score:'85/100'},
-      {name:'Link Resource',course:'AI',due:'1h 30m',status:'upcoming',score:null},
-    ]
-  },
-  bio:{name:'Computational Biology',code:'SCIE6062001',credit:'2/1',cls:'LR01 - LEC',bg:'#1e1040',icon:'ti-dna',progress:28,session:10,
-    sessions:[
-      {n:1,title:'Intro to Computational Biology',status:'done',resources:[{name:'Lecture Slides',icon:'ti-file-text'}]},
-      {n:2,title:'Cell Biology Basics',status:'done',resources:[{name:'Lecture Slides',icon:'ti-file-text'}]},
-      {n:3,title:'Genomics Overview',status:'done',resources:[{name:'Lecture Slides',icon:'ti-file-text'},{name:'Reading List',icon:'ti-book'}]},
-      {n:4,title:'DNA Sequencing Methods',status:'done',resources:[{name:'Lecture Slides',icon:'ti-file-text'}]},
-      {n:5,title:'Proteomics',status:'done',resources:[{name:'Lecture Slides',icon:'ti-file-text'},{name:'Exercise PDF',icon:'ti-clipboard-list'}]},
-      {n:6,title:'Bioinformatics Databases',status:'done',resources:[{name:'Lecture Slides',icon:'ti-file-text'}]},
-      {n:7,title:'BLAST & Alignment Tools',status:'done',resources:[{name:'Lecture Slides',icon:'ti-file-text'},{name:'Lab Guide',icon:'ti-flask'}]},
-      {n:8,title:'Phylogenetics',status:'done',resources:[{name:'Lecture Slides',icon:'ti-file-text'}]},
-      {n:9,title:'Molecular Evolution',status:'done',resources:[{name:'Lecture Slides',icon:'ti-file-text'},{name:'Assignment 3',icon:'ti-pencil'}]},
-      {n:10,title:'Sequence Alignment',status:'current',resources:[{name:'Lecture Slides',icon:'ti-file-text'},{name:'Session Video',icon:'ti-video'},{name:'Lab Worksheet',icon:'ti-clipboard-list'}]},
-      {n:11,title:'Structural Bioinformatics',status:'upcoming',resources:[]},
-      {n:12,title:'Systems Biology',status:'upcoming',resources:[]},
-    ],
-    forum:[
-      {id:1,auth:'Dr. Rina Susanti',init:'RS',color:'#1e1040',time:'Wed 10:00',body:'Forum Session 10: Sequence Alignment. Silakan tanyakan hal-hal terkait algoritma alignment.',replies:[{auth:'Nadia Putri',init:'NP',color:'#b45309',time:'Wed 11:20',text:'Bu, apa perbedaan global vs local alignment dalam praktiknya?'}]},
-    ],
-    assignments:[
-      {name:'Assignment 1',course:'Bio',due:'Completed',status:'done',score:'78/100'},
-      {name:'Assignment 2',course:'Bio',due:'Completed',status:'done',score:'82/100'},
-      {name:'Assignment 3',course:'Bio',due:'Overdue',status:'overdue',score:null},
-    ]
-  }
-};
-
-let activeCourse=null;
-let prevPage=null;
-let activeCourseTab='sessions';
-
-function showPage(id, navEl, label){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('page-'+id).classList.add('active');
-  document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
-  if(navEl) navEl.classList.add('active');
-  document.getElementById('topbar-label').textContent=label||id;
-}
-
-function showCourse(id){
-  prevPage=document.querySelector('.page.active')?.id||'page-dashboard';
-  activeCourse=id;
-  activeCourseTab='sessions';
-  renderCourseDetail(id,'sessions');
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('page-course-detail').classList.add('active');
-  document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
-  document.getElementById('topbar-label').textContent=courses[id].name;
-  // reset tabs
-  document.querySelectorAll('.cd-tab').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.cd-tab')[0].classList.add('active');
-}
-
-function goBack(){
-  const pg=prevPage||'page-dashboard';
-  const navMap={'page-dashboard':0,'page-courses':1,'page-assignments':2,'page-announcements':3};
-  const idx=navMap[pg]??0;
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById(pg).classList.add('active');
-  document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
-  document.querySelectorAll('.nav-link')[idx].classList.add('active');
-  const labels=['My Dashboard','My Courses','Assignments','Announcements'];
-  document.getElementById('topbar-label').textContent=labels[idx];
-}
-
-function renderCourseDetail(id, tab){
-  const c=courses[id];
-  // header
-  document.getElementById('cd-header-content').innerHTML=`
-    <div class="cd-badge" style="background:${c.bg};"><i class="ti ${c.icon}" aria-hidden="true"></i></div>
-    <div>
-      <div class="cd-title">${c.name}</div>
-      <div class="cd-sub">${c.code} · ${c.credit} Credits · ${c.cls} · Session ${c.session}/16</div>
+  <!-- SUBMIT MODAL -->
+  <div class="modal-overlay" id="submit-modal">
+    <div class="modal">
+      <div class="modal-title" id="modal-title">Submit Assignment</div>
+      <div class="modal-sub" id="modal-sub">Upload your file below.</div>
+      <div class="modal-dropzone" onclick="document.getElementById('file-input').click()">
+        <i class="ti ti-cloud-upload"></i>
+        <div class="modal-dropzone-text">Click to upload or drag & drop</div>
+        <div class="modal-dropzone-hint">PDF, DOCX, ZIP · max 50 MB</div>
+      </div>
+      <input type="file" id="file-input" style="display:none" onchange="handleFileSelect(this)">
+      <div class="modal-file-preview" id="modal-file-preview">
+        <i class="ti ti-file"></i>
+        <span class="modal-file-name" id="modal-file-name"></span>
+        <span class="modal-file-remove" onclick="clearFile()">×</span>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+        <button class="btn-submit" id="modal-submit-btn" disabled>Submit</button>
+      </div>
     </div>
-  `;
-  renderCourseTab(id, tab);
-}
+  </div>
 
-function switchCourseTab(tab, btn){
-  activeCourseTab=tab;
-  document.querySelectorAll('.cd-tab').forEach(t=>t.classList.remove('active'));
-  btn.classList.add('active');
-  renderCourseTab(activeCourse, tab);
-}
+  <div class="toast" id="toast"><i class="ti ti-circle-check"></i><span id="toast-msg">Done</span></div>
 
-function renderCourseTab(id, tab){
-  const c=courses[id];
-  const wrap=document.getElementById('cd-body-wrap');
-  if(tab==='sessions'){
-    wrap.innerHTML=`<div class="session-list">${c.sessions.map(s=>`
-      <div class="sess-card${s.status==='current'?' current':''}">
+  <script>
+    /* ─────────────────────────────────────────────
+       TASK INDEX CONSTANTS  (match harness order)
+       0 = announcements
+       1 = session_material
+       2 = submit_assignment
+       3 = forum_post
+    ───────────────────────────────────────────── */
+    const TASK = { ANNOUNCE: 0, SESSION: 1, SUBMIT: 2, FORUM: 3 };
+
+    function tryComplete(expectedIdx) {
+      if (typeof currentTask !== 'undefined' && currentTask === expectedIdx) {
+        if (typeof harnessMarkDone === 'function') harnessMarkDone();
+      }
+    }
+
+    /* ── app data ── */
+    const courses = {
+      calc: {
+        name: 'Calculus', code: 'MATH2032001', credit: '3/1', cls: 'LR01 - LEC', bg: '#0d2b5e', icon: 'ti-math-integral',
+        sessions: [
+          { n: 1, title: 'Introduction to Limits', status: 'done', resources: [{ name: 'Lecture Slides', icon: 'ti-file-text' }, { name: 'Practice Set', icon: 'ti-clipboard-list' }] },
+          { n: 2, title: 'Differentiation Basics', status: 'done', resources: [{ name: 'Lecture Slides', icon: 'ti-file-text' }] },
+          { n: 3, title: 'Chain Rule', status: 'done', resources: [{ name: 'Lecture Slides', icon: 'ti-file-text' }] },
+          { n: 4, title: 'Implicit Differentiation', status: 'done', resources: [{ name: 'Lecture Slides', icon: 'ti-file-text' }] },
+          { n: 5, title: 'Applications of Derivatives', status: 'done', resources: [{ name: 'Lecture Slides', icon: 'ti-file-text' }] },
+          { n: 6, title: 'Curve Sketching', status: 'done', resources: [{ name: 'Lecture Slides', icon: 'ti-file-text' }] },
+          { n: 7, title: 'Optimization', status: 'done', resources: [{ name: 'Lecture Slides', icon: 'ti-file-text' }] },
+          { n: 8, title: 'Integration Intro', status: 'done', resources: [{ name: 'Lecture Slides', icon: 'ti-file-text' }] },
+          { n: 9, title: 'Definite Integrals', status: 'done', resources: [{ name: 'Lecture Slides', icon: 'ti-file-text' }] },
+          { n: 10, title: 'Derivatives Review', status: 'current', resources: [{ name: 'Lecture Slides', icon: 'ti-file-text' }, { name: 'Session Video', icon: 'ti-video' }, { name: 'Practice Problems', icon: 'ti-clipboard-list' }] },
+          { n: 11, title: 'Advanced Integration', status: 'upcoming', resources: [] },
+          { n: 12, title: 'Series & Sequences', status: 'upcoming', resources: [] },
+        ],
+        forum: [
+          { id: 1, auth: 'Dr. Hendro Djoko', init: 'HD', color: '#0d2b5e', time: 'Mon 09:00', body: 'Selamat datang di forum Calculus Session 10! Silakan diskusikan materi Derivatives Review.', replies: [{ auth: 'Rania Kusuma', init: 'RK', color: '#0d9488', time: 'Mon 10:15', text: 'Pak, boleh minta penjelasan lebih lanjut tentang chain rule pada fungsi komposit trigonometri?' }] },
+          { id: 2, auth: 'Farhan Adi', init: 'FA', color: '#7c3aed', time: 'Mon 14:20', body: 'Ada yang bisa jelasin perbedaan explicit vs implicit differentiation?', replies: [{ auth: 'Dr. Hendro Djoko', init: 'HD', color: '#0d2b5e', time: 'Mon 15:00', text: 'Explicit digunakan saat y bisa dinyatakan langsung sebagai fungsi x.' }] },
+        ],
+        assignments: [
+          { name: 'Quiz 1', due: 'Completed', status: 'done', score: '85/100' },
+          { name: 'Quiz 2', due: 'Completed', status: 'done', score: '92/100' },
+          { name: 'Assignment 1', due: 'Completed', status: 'done', score: '88/100' },
+          { name: 'Assignment 2', due: 'Completed', status: 'done', score: '95/100' },
+          { name: 'Quiz 3', due: '3 days', status: 'upcoming', score: null },
+        ]
+      },
+      ai: {
+        name: 'Artificial Intelligence', code: 'COMP6048001', credit: '3/1', cls: 'LD01 - LEC', bg: '#0e2e1a', icon: 'ti-cpu',
+        sessions: [
+          { n: 1, title: 'Introduction to AI', status: 'done', resources: [{ name: 'Lecture Slides', icon: 'ti-file-text' }] },
+          { n: 2, title: 'Search Algorithms', status: 'done', resources: [{ name: 'Lecture Slides', icon: 'ti-file-text' }] },
+          { n: 3, title: 'Knowledge Representation', status: 'done', resources: [{ name: 'Lecture Slides', icon: 'ti-file-text' }] },
+          { n: 4, title: 'Propositional Logic', status: 'done', resources: [{ name: 'Lecture Slides', icon: 'ti-file-text' }] },
+          { n: 5, title: 'First-Order Logic', status: 'done', resources: [{ name: 'Lecture Slides', icon: 'ti-file-text' }] },
+          { n: 6, title: 'Planning', status: 'done', resources: [{ name: 'Lecture Slides', icon: 'ti-file-text' }] },
+          { n: 7, title: 'Machine Learning Intro', status: 'done', resources: [{ name: 'Lecture Slides', icon: 'ti-file-text' }, { name: 'Session Video', icon: 'ti-video' }] },
+          { n: 8, title: 'Supervised Learning', status: 'done', resources: [{ name: 'Lecture Slides', icon: 'ti-file-text' }] },
+          { n: 9, title: 'Unsupervised Learning', status: 'done', resources: [{ name: 'Lecture Slides', icon: 'ti-file-text' }] },
+          { n: 10, title: 'Neural Networks', status: 'current', resources: [{ name: 'Lecture Slides', icon: 'ti-file-text' }, { name: 'Session Video', icon: 'ti-video' }, { name: 'Python Notebook', icon: 'ti-code' }] },
+          { n: 11, title: 'Deep Learning', status: 'upcoming', resources: [] },
+          { n: 12, title: 'Reinforcement Learning', status: 'upcoming', resources: [] },
+        ],
+        forum: [
+          { id: 1, auth: 'Anderies, M.Kom.', init: 'AN', color: '#0e2e1a', time: 'Tue 08:00', body: 'Forum Session 10: Neural Networks.', replies: [{ auth: 'Zahra Aini', init: 'ZA', color: '#0d9488', time: 'Tue 09:30', text: 'Pak, untuk activation function ReLU, apakah ada kelemahan dibanding sigmoid?' }] },
+          { id: 2, auth: 'Bintang Nugraha', init: 'BN', color: '#7c3aed', time: 'Tue 11:00', body: 'Sudah coba implementasi simple neural network pakai numpy.', replies: [] },
+        ],
+        assignments: [
+          { name: 'Quiz 1', due: 'Completed', status: 'done', score: '90/100' },
+          { name: 'Assignment 1', due: 'Completed', status: 'done', score: '92/100' },
+          { name: 'Link Resource', due: '1h 30m', status: 'upcoming', score: null },
+        ]
+      },
+      bio: {
+        name: 'Computational Biology', code: 'SCIE6062001', credit: '2/1', cls: 'LR01 - LEC', bg: '#1e1040', icon: 'ti-dna',
+        sessions: [
+          { n: 1, title: 'Intro to Computational Biology', status: 'done', resources: [{ name: 'Lecture Slides', icon: 'ti-file-text' }] },
+          { n: 2, title: 'Cell Biology Basics', status: 'done', resources: [{ name: 'Lecture Slides', icon: 'ti-file-text' }] },
+          { n: 3, title: 'Genomics Overview', status: 'done', resources: [{ name: 'Lecture Slides', icon: 'ti-file-text' }] },
+          { n: 4, title: 'DNA Sequencing Methods', status: 'done', resources: [{ name: 'Lecture Slides', icon: 'ti-file-text' }] },
+          { n: 5, title: 'Proteomics', status: 'done', resources: [{ name: 'Lecture Slides', icon: 'ti-file-text' }] },
+          { n: 6, title: 'Bioinformatics Databases', status: 'done', resources: [{ name: 'Lecture Slides', icon: 'ti-file-text' }] },
+          { n: 7, title: 'BLAST & Alignment Tools', status: 'done', resources: [{ name: 'Lecture Slides', icon: 'ti-file-text' }] },
+          { n: 8, title: 'Phylogenetics', status: 'done', resources: [{ name: 'Lecture Slides', icon: 'ti-file-text' }] },
+          { n: 9, title: 'Molecular Evolution', status: 'done', resources: [{ name: 'Lecture Slides', icon: 'ti-file-text' }] },
+          { n: 10, title: 'Sequence Alignment', status: 'current', resources: [{ name: 'Lecture Slides', icon: 'ti-file-text' }, { name: 'Session Video', icon: 'ti-video' }, { name: 'Lab Worksheet', icon: 'ti-clipboard-list' }] },
+          { n: 11, title: 'Structural Bioinformatics', status: 'upcoming', resources: [] },
+          { n: 12, title: 'Systems Biology', status: 'upcoming', resources: [] },
+        ],
+        forum: [
+          { id: 1, auth: 'Dr. Rina Susanti', init: 'RS', color: '#1e1040', time: 'Wed 10:00', body: 'Forum Session 10: Sequence Alignment.', replies: [{ auth: 'Nadia Putri', init: 'NP', color: '#b45309', time: 'Wed 11:20', text: 'Bu, apa perbedaan global vs local alignment dalam praktiknya?' }] },
+        ],
+        assignments: [
+          { name: 'Assignment 1', due: 'Completed', status: 'done', score: '78/100' },
+          { name: 'Assignment 2', due: 'Completed', status: 'done', score: '82/100' },
+          { name: 'Assignment 3', due: 'Overdue', status: 'overdue', score: null },
+        ]
+      }
+    };
+
+    let activeCourse = null, prevPage = null, activeCourseTab = 'sessions', pendingSubmitCourse = null;
+
+    function showPage(id, navEl, label) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-' + id).classList.add('active');
+      document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+      if (navEl) navEl.classList.add('active');
+      document.getElementById('topbar-label').textContent = label || id;
+    }
+
+    function showCourse(id) {
+      prevPage = document.querySelector('.page.active')?.id || 'page-dashboard';
+      activeCourse = id;
+      activeCourseTab = 'sessions';
+      renderCourseDetail(id, 'sessions');
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-course-detail').classList.add('active');
+      document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+      document.getElementById('topbar-label').textContent = courses[id].name;
+      document.querySelectorAll('.cd-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.cd-tab')[0].classList.add('active');
+    }
+
+    function goBack() {
+      const pg = prevPage || 'page-dashboard';
+      const navMap = { 'page-dashboard': 0, 'page-courses': 1, 'page-assignments': 2, 'page-announcements': 3 };
+      const idx = navMap[pg] ?? 0;
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(pg).classList.add('active');
+      document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+      document.querySelectorAll('.nav-link')[idx].classList.add('active');
+      document.getElementById('topbar-label').textContent = ['My Dashboard', 'My Courses', 'Assignments', 'Announcements'][idx];
+    }
+
+    function renderCourseDetail(id, tab) {
+      const c = courses[id];
+      document.getElementById('cd-header-content').innerHTML = `<div class="cd-badge" style="background:${c.bg};"><i class="ti ${c.icon}"></i></div><div><div class="cd-title">${c.name}</div><div class="cd-sub">${c.code} · ${c.credit} Credits · ${c.cls}</div></div>`;
+      renderCourseTab(id, tab);
+    }
+
+    function switchCourseTab(tab, btn) {
+      activeCourseTab = tab;
+      document.querySelectorAll('.cd-tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      renderCourseTab(activeCourse, tab);
+    }
+
+    function renderCourseTab(id, tab) {
+      const c = courses[id];
+      const wrap = document.getElementById('cd-body-wrap');
+      if (tab === 'sessions') {
+        wrap.innerHTML = `<div class="session-list">${c.sessions.map(s => `
+      <div class="sess-card${s.status === 'current' ? ' current' : ''}">
         <div class="sess-hd">
           <div class="sess-num">${s.n}</div>
           <div class="sess-title">${s.title}</div>
-          <span class="sess-badge ${s.status}">${s.status==='current'?'Current':s.status==='done'?'Completed':'Upcoming'}</span>
+          <span class="sess-badge ${s.status}">${s.status === 'current' ? 'Current' : s.status === 'done' ? 'Completed' : 'Upcoming'}</span>
         </div>
-        ${s.resources.length?`<div class="sess-resources">${s.resources.map(r=>`<button class="res-btn" onclick="hOpenResource('${r.name}')"><i class="ti ${r.icon}" aria-hidden="true"></i>${r.name}</button>`).join('')}</div>`:''}
+        ${s.resources.length ? `<div class="sess-resources">${s.resources.map(r => `<button class="res-btn" onclick="hOpenResource('${r.name}','${id}','${s.n}')"><i class="ti ${r.icon}"></i>${r.name}</button>`).join('')}</div>` : ''}
       </div>`).join('')}</div>`;
-  } else if(tab==='forum'){
-    wrap.innerHTML=`
+      } else if (tab === 'forum') {
+        wrap.innerHTML = `
       <div class="forum-compose">
         <div class="forum-compose-title">Post to Forum</div>
-        <textarea class="compose-input" rows="3" placeholder="Share a question or comment with the class..." id="forum-input"></textarea>
+        <textarea class="compose-input" rows="3" placeholder="Share a question or comment..." id="forum-input"></textarea>
         <div class="compose-toolbar">
-          <button class="forum-action-btn" onclick="showToast('Attach file')"><i class="ti ti-paperclip" aria-hidden="true"></i> Attach</button>
-          <button class="compose-submit" onclick="submitForumPost()">Post</button>
+          <button class="forum-action-btn" onclick="showToast('Attach file')"><i class="ti ti-paperclip"></i> Attach</button>
+          <button class="compose-submit" onclick="submitForumPost('${id}')">Post</button>
         </div>
       </div>
       <div id="forum-posts-list">
-      ${c.forum.map(p=>`
-        <div class="forum-post">
-          <div class="forum-post-hd">
-            <div class="forum-avatar" style="background:${p.color};">${p.init}</div>
-            <div><div class="forum-author">${p.auth}</div><div class="forum-time">${p.time}</div></div>
-          </div>
+        ${c.forum.map(p => `<div class="forum-post">
+          <div class="forum-post-hd"><div class="forum-avatar" style="background:${p.color};">${p.init}</div><div><div class="forum-author">${p.auth}</div><div class="forum-time">${p.time}</div></div></div>
           <div class="forum-body">${p.body}</div>
-          ${p.replies.map(r=>`<div class="forum-reply"><div class="forum-reply-auth">${r.auth}</div><div class="forum-reply-text">${r.text}</div></div>`).join('')}
+          ${p.replies.map(r => `<div class="forum-reply"><div class="forum-reply-auth">${r.auth}</div><div class="forum-reply-text">${r.text}</div></div>`).join('')}
           <div style="display:flex;margin-top:10px;">
-            <button class="forum-action-btn" onclick="showToast('👍 Liked')"><i class="ti ti-thumb-up" aria-hidden="true"></i> Like</button>
-            <button class="forum-action-btn" onclick="showToast('Reply mode')"><i class="ti ti-message-reply" aria-hidden="true"></i> Reply</button>
+            <button class="forum-action-btn" onclick="showToast('Liked')"><i class="ti ti-thumb-up"></i> Like</button>
+            <button class="forum-action-btn" onclick="showToast('Reply')"><i class="ti ti-message-reply"></i> Reply</button>
           </div>
         </div>`).join('')}
       </div>`;
-  } else if(tab==='assignments'){
-    wrap.innerHTML=`<div class="card">
-      ${c.assignments.map(a=>`
-        <div class="asgn-item">
-          <div class="asgn-ic${a.status==='overdue'?' late':''}"><i class="ti ti-pencil" aria-hidden="true"></i></div>
-          <div><div class="asgn-t">${a.name}</div><div class="asgn-s">${a.due}</div></div>
-          ${a.score?`<div class="asgn-tag" style="color:var(--color-text-success);background:var(--color-background-success);">${a.score}</div>`:
-            a.status==='overdue'?`<div class="asgn-tag late">Overdue</div><button class="asgn-open-btn" onclick="openSubmitModal('${a.name}','${a.course}')">Submit →</button>`:
-            `<div class="asgn-tag">${a.due}</div><button class="asgn-open-btn" onclick="openSubmitModal('${a.name}','${a.course}')">Submit →</button>`}
-        </div>`).join('')}
-    </div>`;
-  }
-}
-
-function submitForumPost(){
-  const input=document.getElementById('forum-input');
-  const text=input?.value?.trim();
-  if(!text){showToast('Please write something first');return;}
-  const c=courses[activeCourse];
-  const list=document.getElementById('forum-posts-list');
-  const newPost=document.createElement('div');
-  newPost.className='forum-post';
-  newPost.style.animation='fadeIn .3s ease';
-  newPost.innerHTML=`
-    <div class="forum-post-hd">
-      <div class="forum-avatar" style="background:#e87722;">JD</div>
-      <div><div class="forum-author">Jane Doe</div><div class="forum-time">just now</div></div>
-    </div>
-    <div class="forum-body">${text}</div>
-    <div style="display:flex;margin-top:10px;">
-      <button class="forum-action-btn"><i class="ti ti-thumb-up" aria-hidden="true"></i> Like</button>
-      <button class="forum-action-btn"><i class="ti ti-message-reply" aria-hidden="true"></i> Reply</button>
-    </div>`;
-  list.prepend(newPost);
-  input.value='';
-  showToast('Post submitted!');
-  if(window.harnessMarkDone)window.harnessMarkDone();
-}
-
-function openSubmitModal(name, course){
-  document.getElementById('modal-title').textContent='Submit: '+name;
-  document.getElementById('modal-sub').textContent=course+' — Upload your file. Accepted: PDF, DOCX, ZIP.';
-  document.getElementById('modal-file-preview').classList.remove('has-file');
-  document.getElementById('modal-submit-btn').disabled=true;
-  document.getElementById('file-input').value='';
-  document.getElementById('submit-modal').classList.add('open');
-}
-function closeModal(){document.getElementById('submit-modal').classList.remove('open');}
-function handleFileSelect(input){
-  if(input.files&&input.files[0]){
-    document.getElementById('modal-file-name').textContent=input.files[0].name;
-    document.getElementById('modal-file-preview').classList.add('has-file');
-    document.getElementById('modal-submit-btn').disabled=false;
-  }
-}
-function clearFile(){
-  document.getElementById('modal-file-preview').classList.remove('has-file');
-  document.getElementById('modal-submit-btn').disabled=true;
-  document.getElementById('file-input').value='';
-}
-function submitAssignment(){
-  closeModal();
-  showToast('Assignment submitted!');
-  if(window.harnessMarkDone)window.harnessMarkDone();
-}
-
-function showToast(msg){
-  const t=document.getElementById('toast');
-  document.getElementById('toast-msg').textContent=msg;
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2500);
-}
-
-// Task harness integration helpers
-function hAnnounceClick(el){
-  const body = el.querySelector('.ann-body');
-  const isShown = body.style.display === 'block';
-  body.style.display = isShown ? 'none' : 'block';
-  if(!isShown && window.harnessMarkDone){
-    window.harnessMarkDone();
-  }
-}
-
-function hOpenResource(resourceName){
-  showToast('Opening: ' + resourceName);
-  // Complete task if this is the Session Video for AI course (Session 10)
-  if(resourceName === 'Session Video' && window.harnessMarkDone){
-    window.harnessMarkDone();
-  }
-}
-</script>
-
-<script>const HARNESS_DESIGN="Design A";const HARNESS_SHEET_URL="https://script.google.com/macros/s/AKfycbxiHyKRZJds7BXEcxG6q5Ny_tqVfw0JY77uJRwdHx5314YbKkLrJu2MAV059liK9-is/exec";</script>
-
-<!-- ============================================================
-     TASK HARNESS — injected into both Design A and Design B
-     ============================================================ -->
-<style>
-/* ---------- overlay shell ---------- */
-#harness-overlay{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.55);backdrop-filter:blur(3px);}
-#harness-overlay.hidden{display:none;}
-
-/* ---------- card ---------- */
-.h-card{background:var(--color-background-primary,#fff);border-radius:14px;border:0.5px solid var(--color-border-tertiary,#e5e7eb);padding:28px 30px;width:380px;max-width:92vw;box-shadow:0 16px 48px rgba(0,0,0,.22);font-family:var(--font-sans,system-ui);color:var(--color-text-primary,#111);}
-.h-card h2{font-size:17px;font-weight:600;margin-bottom:6px;color:var(--color-text-primary,#111);}
-.h-card p{font-size:13px;color:var(--color-text-secondary,#555);line-height:1.6;margin-bottom:0;}
-.h-badge{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:rgba(232,119,34,.12);color:#e87722;padding:3px 9px;border-radius:20px;margin-bottom:14px;}
-.h-task-title{font-size:20px;font-weight:600;margin-bottom:10px;line-height:1.3;color:var(--color-text-primary,#111);}
-.h-task-desc{font-size:13px;color:var(--color-text-secondary,#555);line-height:1.65;margin-bottom:22px;}
-.h-btn{width:100%;padding:11px;border-radius:8px;border:none;font-size:14px;font-weight:600;cursor:pointer;background:#e87722;color:#fff;transition:opacity .2s;}
-.h-btn:hover{opacity:.88;}
-.h-btn.secondary{background:var(--color-background-secondary,#f3f4f6);color:var(--color-text-secondary,#555);margin-top:8px;}
-.h-input{width:100%;border:0.5px solid var(--color-border-tertiary,#e5e7eb);border-radius:8px;padding:9px 12px;font-size:13px;background:var(--color-background-secondary,#f9fafb);color:var(--color-text-primary,#111);font-family:inherit;margin-bottom:14px;}
-.h-input:focus{outline:none;border-color:#e87722;}
-.h-steps{display:flex;gap:6px;margin-bottom:20px;}
-.h-step{flex:1;height:4px;border-radius:2px;background:var(--color-background-secondary,#e5e7eb);}
-.h-step.done{background:#e87722;}
-.h-step.active{background:#e87722;opacity:.45;}
-
-/* ---------- live timer bar (top of screen, hidden behind harness) ---------- */
-#harness-timer-bar{position:fixed;top:0;left:0;right:0;z-index:99990;height:36px;background:var(--color-background-primary,#fff);border-bottom:0.5px solid var(--color-border-tertiary,#e5e7eb);display:none;align-items:center;padding:0 16px;gap:12px;font-size:12px;}
-#harness-timer-bar.visible{display:flex;}
-#htb-task{font-weight:600;color:var(--color-text-primary,#111);flex:1;}
-#htb-time{font-variant-numeric:tabular-nums;font-weight:600;color:#e87722;font-family:var(--font-mono,monospace);}
-#htb-done{background:#e87722;color:#fff;border:none;padding:4px 12px;border-radius:5px;font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap;}
-
-/* ---------- done-screen ---------- */
-.h-done-icon{font-size:40px;text-align:center;margin-bottom:14px;}
-.h-results{background:var(--color-background-secondary,#f3f4f6);border-radius:8px;padding:12px 14px;margin-bottom:18px;font-size:12px;}
-.h-results-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:0.5px solid var(--color-border-tertiary,#e5e7eb);}
-.h-results-row:last-child{border:none;}
-.h-results-lbl{color:var(--color-text-secondary,#555);}
-.h-results-val{font-weight:600;font-family:var(--font-mono,monospace);}
-.h-status{font-size:11px;text-align:center;color:var(--color-text-secondary,#555);margin-top:10px;}
-.h-status.ok{color:#22c55e;font-weight:600;}
-.h-status.err{color:#ef4444;}
-</style>
-
-<!-- Timer bar (always in DOM, shown when task is running) -->
-<div id="harness-timer-bar">
-  <span id="htb-badge" style="font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:rgba(232,119,34,.12);color:#e87722;padding:2px 8px;border-radius:20px;"></span>
-  <span id="htb-task"></span>
-  <span id="htb-time">0:00</span>
-</div>
-
-<!-- Main overlay -->
-<div id="harness-overlay">
-  <div class="h-card" id="harness-card">
-    <!-- content injected by JS -->
-  </div>
-</div>
-
-<script>
-(function(){
-/* ===== CONFIG ===== */
-const DESIGN_LABEL = typeof HARNESS_DESIGN !== 'undefined' ? HARNESS_DESIGN : 'Design A';
-const SHEET_URL = typeof HARNESS_SHEET_URL !== 'undefined' ? HARNESS_SHEET_URL : '';
-
-const TASKS = [
-  {
-    id: 'announcements',
-    title: 'Check an announcement',
-    desc: 'Find and read the full content of the "Midterm Exam Schedule Released" announcement.',
-    hint: ''
-  },
-  {
-    id: 'session_material',
-    title: 'Open session material',
-    desc: 'Go to the Artificial Intelligence course, find Session 10, and open the "Session Video" resource.',
-    hint: ''
-  },
-  {
-    id: 'submit_assignment',
-    title: 'Submit an assignment',
-    desc: 'Submit Assignment 3 for Computational Biology. Upload any file to complete the submission.',
-    hint: ''
-  },
-  {
-    id: 'forum_post',
-    title: 'Post on the forum',
-    desc: 'Go to the Calculus course forum and post a message (any text is fine).',
-    hint: ''
-  }
-];
-
-/* ===== STATE ===== */
-let participantId = '';
-let currentTask = -1; // -1 = not started
-let taskStartTime = null;
-let results = []; // {taskId, label, ms, errors}
-let taskErrors = 0;
-let timerInterval = null;
-
-/* ===== BOOT ===== */
-
-// patch showToast to count off-track interactions as errors
-const _origShowToast = window.showToast;
-if(typeof _origShowToast === 'function'){
-  window.showToast = function(msg){
-    _origShowToast(msg);
-    // non-completion toasts = possible mis-tap
-    if(currentTask >= 0 && !msg.toLowerCase().includes('submitted') && !msg.toLowerCase().includes('posted')){
-      taskErrors++;
+      } else if (tab === 'assignments') {
+        wrap.innerHTML = `<div class="card">${c.assignments.map(a => `
+      <div class="asgn-item">
+        <div class="asgn-ic${a.status === 'overdue' ? ' late' : ''}"><i class="ti ti-pencil"></i></div>
+        <div><div class="asgn-t">${a.name}</div><div class="asgn-s">${a.due}</div></div>
+        ${a.score
+            ? `<div class="asgn-tag" style="color:var(--color-text-success);background:var(--color-background-success);">${a.score}</div>`
+            : a.status === 'overdue'
+              ? `<div class="asgn-tag late">Overdue</div><button class="asgn-open-btn" onclick="openSubmitModal('${a.name}','${id}')">Submit →</button>`
+              : `<div class="asgn-tag">${a.due}</div><button class="asgn-open-btn" onclick="openSubmitModal('${a.name}','${id}')">Submit →</button>`}
+      </div>`).join('')}</div>`;
+      }
     }
-  };
-}
 
-/* ===== SCREENS ===== */
+    /* ── TASK-SPECIFIC HANDLERS ──────────────────────────────────
+       Each handler encodes what condition makes it the "right" action.
+    ───────────────────────────────────────────────────────────── */
 
-function showWelcome(){
-  setCard(`
-    <div class="h-badge">${DESIGN_LABEL}</div>
-    <div class="h-task-title">Usability Study</div>
-    <p style="margin-bottom:18px;">Welcome! You'll complete <strong>4 short tasks</strong> on this interface. Each task is timed — try to complete it as naturally as you would normally.<br><br>First, please enter your Student ID (NIM).</p>
-    <input class="h-input" id="h-pid-input" placeholder="e.g. 2602123456" maxlength="20">
-    <button class="h-btn" onclick="harnessSetParticipant()">Continue →</button>
-  `);
-  showOverlay();
-  setTimeout(()=>document.getElementById('h-pid-input')?.focus(),100);
-}
+    /**
+     * T0 – ANNOUNCEMENTS
+     * Only the Midterm announcement (tag='midterm') on the full Announcements page completes the task.
+     * Expanding any other item, or expanding from the dashboard widget, does NOT complete it.
+     */
+    function hAnnounceClick(el, tag) {
+      const body = el.querySelector('.ann-body');
+      const opening = body.style.display !== 'block';
+      body.style.display = opening ? 'block' : 'none';
+      // Complete only when OPENING the midterm announcement AND the full announcements page is active
+      if (opening && tag === 'midterm') {
+        const announcementsPageActive = document.getElementById('page-announcements').classList.contains('active');
+        if (announcementsPageActive) tryComplete(TASK.ANNOUNCE);
+      }
+    }
 
-window.harnessSetParticipant = function(){
-  const v = document.getElementById('h-pid-input')?.value?.trim();
-  if(!v){ pulseInput('h-pid-input'); return; }
-  participantId = v;
-  showTaskIntro(0);
-};
+    /**
+     * T1 – SESSION MATERIAL
+     * Only "Session Video" opened inside the AI course session 10 completes the task.
+     * Session Video in Calculus/Bio or other resources do NOT complete it.
+     */
+    function hOpenResource(resourceName, courseId, sessionNum) {
+      showToast('Opening: ' + resourceName);
+      if (resourceName === 'Session Video' && courseId === 'ai' && Number(sessionNum) === 10) {
+        tryComplete(TASK.SESSION);
+      }
+    }
 
-function showTaskIntro(idx){
-  currentTask = -1;
-  stopTimer();
-  const t = TASKS[idx];
-  const stepDots = TASKS.map((_,i)=>`<div class="h-step ${i<idx?'done':i===idx?'active':''}"></div>`).join('');
-  setCard(`
-    <div class="h-steps">${stepDots}</div>
-    <div class="h-badge">Task ${idx+1} of ${TASKS.length}</div>
-    <div class="h-task-title">${t.title}</div>
-    <div class="h-task-desc">${t.desc}</div>
-    <p style="font-size:11px;color:var(--color-text-tertiary,#999);margin-bottom:18px;">💡 ${t.hint}</p>
-    <button class="h-btn" onclick="harnessStartTask(${idx})">Start task →</button>
-  `);
-  showOverlay();
-}
+    /**
+     * T2 – SUBMIT ASSIGNMENT
+     * Only a modal submission for the 'bio' course (Assignment 3, Computational Biology) completes the task.
+     */
+    function openSubmitModal(name, courseId) {
+      pendingSubmitCourse = courseId;
+      document.getElementById('modal-title').textContent = 'Submit: ' + name;
+      document.getElementById('modal-sub').textContent =
+        (courseId === 'bio' ? 'Computational Biology' : courseId === 'ai' ? 'Artificial Intelligence' : courseId === 'calc' ? 'Calculus' : courseId) +
+        ' — Upload your file. Accepted: PDF, DOCX, ZIP.';
+      document.getElementById('modal-file-preview').classList.remove('has-file');
+      document.getElementById('modal-submit-btn').disabled = true;
+      document.getElementById('file-input').value = '';
+      document.getElementById('submit-modal').classList.add('open');
+    }
+    function closeModal() {
+      document.getElementById('submit-modal').classList.remove('open');
+      pendingSubmitCourse = null;
+    }
+    function handleFileSelect(input) {
+      if (input.files && input.files[0]) {
+        document.getElementById('modal-file-name').textContent = input.files[0].name;
+        document.getElementById('modal-file-preview').classList.add('has-file');
+        document.getElementById('modal-submit-btn').disabled = false;
+      }
+    }
+    function clearFile() {
+      document.getElementById('modal-file-preview').classList.remove('has-file');
+      document.getElementById('modal-submit-btn').disabled = true;
+      document.getElementById('file-input').value = '';
+    }
+    document.getElementById('modal-submit-btn').addEventListener('click', function () {
+      const course = pendingSubmitCourse; // capture before closeModal nulls it
+      document.getElementById('submit-modal').classList.remove('open');
+      showToast('Assignment submitted!');
+      pendingSubmitCourse = null;
+      if (course === 'bio') tryComplete(TASK.SUBMIT);
+    });
 
-window.harnessStartTask = function(idx){
-  currentTask = idx;
-  taskErrors = 0;
-  taskStartTime = Date.now();
-  hideOverlay();
-  startTimer(idx);
-};
+    /**
+     * T3 – FORUM POST
+     * Only posting in the Calculus (calc) course forum completes the task.
+     * Posting in AI or Bio forum does NOT complete it.
+     */
+    function submitForumPost(courseId) {
+      const input = document.getElementById('forum-input');
+      const text = input?.value?.trim();
+      if (!text) { showToast('Please write something first'); return; }
+      const list = document.getElementById('forum-posts-list');
+      const newPost = document.createElement('div');
+      newPost.className = 'forum-post';
+      newPost.innerHTML = `<div class="forum-post-hd"><div class="forum-avatar" style="background:#e87722;">JD</div><div><div class="forum-author">Jane Doe</div><div class="forum-time">just now</div></div></div><div class="forum-body">${text}</div>`;
+      list.prepend(newPost);
+      input.value = '';
+      showToast('Post submitted!');
+      if (courseId === 'calc') tryComplete(TASK.FORUM);
+    }
 
-window.harnessMarkDone = function(){
-  if(currentTask < 0) return;
-  const elapsed = Date.now() - taskStartTime;
-  stopTimer();
-  results.push({ taskId: TASKS[currentTask].id, label: TASKS[currentTask].title, ms: elapsed, errors: taskErrors });
-  const next = currentTask + 1;
-  currentTask = -1;
-  if(next < TASKS.length){
-    showTaskIntro(next);
-  } else {
-    sendResults();
-    showDone();
-  }
-};
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toast-msg').textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2500);
+    }
+  </script>
 
-function showDone(){
-  const rows = results.map(r=>`
-    <div class="h-results-row">
-      <span class="h-results-lbl">${r.label}</span>
-      <span class="h-results-val">${fmtTime(r.ms)}</span>
-    </div>`).join('');
-  setCard(`
-    <div class="h-done-icon">🎉</div>
-    <div class="h-task-title" style="text-align:center;">All done!</div>
-    <p style="text-align:center;margin-bottom:16px;">Thank you, ${participantId}. Here's your summary:</p>
-    <div class="h-results">${rows}</div>
-    <p style="font-size:12px;color:var(--color-text-secondary,#555);text-align:center;margin-bottom:16px;">Please now complete the <strong>NASA-TLX</strong> and <strong>SUS</strong> questionnaire given to you by the researcher.</p>
-    <div id="h-send-status" class="h-status">Sending results…</div>
-  `);
-  showOverlay();
-  document.getElementById('harness-timer-bar').classList.remove('visible');
-}
+  <!-- ═══════════════════════════════════════════════
+     TASK HARNESS  (Design A)
+     Task indices must match TASK constants above:
+       0 = announcements
+       1 = session_material
+       2 = submit_assignment
+       3 = forum_post
+════════════════════════════════════════════════ -->
+  <script>
+    const HARNESS_DESIGN = "Design A";
+    const HARNESS_SHEET_URL = "https://script.google.com/macros/s/AKfycbxiHyKRZJds7BXEcxG6q5Ny_tqVfw0JY77uJRwdHx5314YbKkLrJu2MAV059liK9-is/exec";
+  </script>
+  <style>
+    #harness-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, .55);
+      backdrop-filter: blur(3px);
+    }
 
-/* ===== TIMER ===== */
-function startTimer(idx){
-  const bar = document.getElementById('harness-timer-bar');
-  document.getElementById('htb-badge').textContent = `Task ${idx+1}/${TASKS.length}`;
-  document.getElementById('htb-task').textContent = TASKS[idx].title;
-  document.getElementById('htb-time').textContent = '0:00';
-  bar.classList.add('visible');
-  clearInterval(timerInterval);
-  timerInterval = setInterval(()=>{
-    if(!taskStartTime) return;
-    document.getElementById('htb-time').textContent = fmtTime(Date.now()-taskStartTime);
-  }, 500);
-}
-function stopTimer(){ clearInterval(timerInterval); timerInterval=null; }
+    #harness-overlay.hidden {
+      display: none;
+    }
 
-/* ===== SEND TO GOOGLE SHEETS ===== */
-function sendResults(){
-  if(!SHEET_URL){ updateStatus('⚠ No sheet URL configured — copy results manually above.', false); return; }
-  const payload = {
-    participant: participantId,
-    design: DESIGN_LABEL,
-    timestamp: new Date().toISOString(),
-    tasks: results.map(r=>({ task: r.label, seconds: (r.ms/1000).toFixed(2), errors: r.errors }))
-  };
-  fetch(SHEET_URL, {
-    method:'POST',
-    mode:'no-cors',
-    headers:{'Content-Type':'application/json'},
-    body: JSON.stringify(payload)
-  }).then(()=>updateStatus('✅ Results saved successfully!', true))
-    .catch(()=>updateStatus('❌ Could not send — please note the times above manually.', false));
-}
+    .h-card {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 28px 30px;
+      width: 380px;
+      max-width: 92vw;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, .3);
+      font-family: system-ui;
+      color: #111;
+    }
 
-function updateStatus(msg, ok){
-  const el = document.getElementById('h-send-status');
-  if(el){ el.textContent=msg; el.className='h-status '+(ok?'ok':'err'); }
-}
+    .h-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      background: rgba(232, 119, 34, .12);
+      color: #e87722;
+      padding: 3px 9px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+    }
 
-/* ===== HELPERS ===== */
-function setCard(html){ document.getElementById('harness-card').innerHTML=html; }
-function showOverlay(){ document.getElementById('harness-overlay').classList.remove('hidden'); }
-function hideOverlay(){ document.getElementById('harness-overlay').classList.add('hidden'); }
-function fmtTime(ms){ const s=Math.floor(ms/1000); return Math.floor(s/60)+':'+(s%60).toString().padStart(2,'0'); }
-function pulseInput(id){
-  const el=document.getElementById(id);
-  if(!el) return;
-  el.style.borderColor='#ef4444';
-  setTimeout(()=>el.style.borderColor='',1000);
-}
+    .h-task-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      line-height: 1.3;
+      color: #111;
+    }
 
-// Initialize harness on page load
-showWelcome();
+    .h-task-desc {
+      font-size: 13px;
+      color: #555;
+      line-height: 1.65;
+      margin-bottom: 22px;
+    }
 
-})();
-</script>
-<script>
-window.HARNESS_DESIGN="Design A";
-window.HARNESS_SHEET="https://script.google.com/macros/s/AKfycbxiHyKRZJds7BXEcxG6q5Ny_tqVfw0JY77uJRwdHx5314YbKkLrJu2MAV059liK9-is/exec";
-</script>
+    .h-btn {
+      width: 100%;
+      padding: 11px;
+      border-radius: 8px;
+      border: none;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #e87722;
+      color: #fff;
+    }
 
+    .h-btn:hover {
+      opacity: .88;
+    }
 
+    .h-input {
+      width: 100%;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 9px 12px;
+      font-size: 13px;
+      background: #f9fafb;
+      color: #111;
+      font-family: inherit;
+      margin-bottom: 14px;
+      box-sizing: border-box;
+    }
 
+    .h-input:focus {
+      outline: none;
+      border-color: #e87722;
+    }
 
+    .h-steps {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
 
+    .h-step {
+      flex: 1;
+      height: 4px;
+      border-radius: 2px;
+      background: #e5e7eb;
+    }
 
+    .h-step.done {
+      background: #e87722;
+    }
+
+    .h-step.active {
+      background: #e87722;
+      opacity: .45;
+    }
+
+    #harness-timer-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 99990;
+      height: 36px;
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      display: none;
+      align-items: center;
+      padding: 0 16px;
+      gap: 12px;
+      font-size: 12px;
+      font-family: system-ui;
+    }
+
+    #harness-timer-bar.visible {
+      display: flex;
+    }
+
+    #htb-badge {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      background: rgba(232, 119, 34, .12);
+      color: #e87722;
+      padding: 2px 8px;
+      border-radius: 20px;
+    }
+
+    #htb-task {
+      font-weight: 600;
+      color: #111;
+      flex: 1;
+    }
+
+    #htb-time {
+      font-weight: 600;
+      color: #e87722;
+      font-family: monospace;
+    }
+
+    .h-results {
+      background: #f3f4f6;
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin-bottom: 18px;
+      font-size: 12px;
+    }
+
+    .h-results-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .h-results-row:last-child {
+      border: none;
+    }
+
+    .h-results-lbl {
+      color: #555;
+    }
+
+    .h-results-val {
+      font-weight: 600;
+      font-family: monospace;
+    }
+
+    .h-status {
+      font-size: 11px;
+      text-align: center;
+      color: #888;
+      margin-top: 10px;
+    }
+
+    .h-status.ok {
+      color: #22c55e;
+      font-weight: 600;
+    }
+
+    .h-status.err {
+      color: #ef4444;
+    }
+  </style>
+  <div id="harness-timer-bar">
+    <span id="htb-badge"></span><span id="htb-task"></span><span id="htb-time">0:00</span>
+  </div>
+  <div id="harness-overlay">
+    <div class="h-card" id="harness-card"></div>
+  </div>
+  <script>
+    (function () {
+      const DESIGN_LABEL = HARNESS_DESIGN;
+      const SHEET_URL = HARNESS_SHEET_URL;
+      const TASKS = [
+        { id: 'announcements', title: "Find and read the full text of the announcement titled 'Midterm Exam Schedule Released'.", desc: '' },
+        { id: 'session_material', title: "Go to the Artificial Intelligence course, find Session 10, and open the Session Video resource.", desc: '' },
+        { id: 'submit_assignment', title: 'Submit Assignment 3 for Computational Biology. Upload any file to complete it.', desc: '' },
+        { id: 'forum_post', title: 'Go to the Calculus course forum and post any message.', desc: '' }
+      ];
+      let participantId = '', currentTask = -1, taskStartTime = null, results = [], timerInterval = null;
+
+      // expose currentTask so tryComplete() can read it
+      Object.defineProperty(window, 'currentTask', { get: () => currentTask, set: v => { currentTask = v; }, configurable: true });
+
+      function showWelcome() {
+        setCard(`<div class="h-badge">${DESIGN_LABEL}</div><div class="h-task-title">Usability Study</div><p style="font-size:13px;color:#555;line-height:1.6;margin-bottom:18px;">Welcome! You'll complete <strong>4 short tasks</strong> on this interface. Each task is timed.<br><br>Enter your Student ID (NIM) to begin.</p><input class="h-input" id="h-pid" placeholder="e.g. 2602123456" maxlength="20"><button class="h-btn" onclick="harnessSetParticipant()">Continue →</button>`);
+        showOverlay(); setTimeout(() => document.getElementById('h-pid')?.focus(), 80);
+      }
+      window.harnessSetParticipant = function () {
+        const v = document.getElementById('h-pid')?.value?.trim();
+        if (!v) { const el = document.getElementById('h-pid'); el.style.borderColor = '#ef4444'; setTimeout(() => el.style.borderColor = '', 900); return; }
+        participantId = v; showTaskIntro(0);
+      };
+      function showTaskIntro(idx) {
+        currentTask = -1; stopTimer();
+        const t = TASKS[idx];
+        const dots = TASKS.map((_, i) => `<div class="h-step ${i < idx ? 'done' : i === idx ? 'active' : ''}"></div>`).join('');
+        setCard(`<div class="h-steps">${dots}</div><div class="h-badge">Task ${idx + 1} of ${TASKS.length}</div><div class="h-task-title">${t.title}</div><div class="h-task-desc">${t.desc}</div><button class="h-btn" onclick="harnessStartTask(${idx})">Start task →</button>`);
+        showOverlay();
+      }
+      window.harnessStartTask = function (idx) { currentTask = idx; taskStartTime = Date.now(); hideOverlay(); startTimer(idx); };
+      window.harnessMarkDone = function () {
+        if (currentTask < 0) return;
+        const elapsed = Date.now() - taskStartTime;
+        stopTimer();
+        results.push({ label: TASKS[currentTask].title, ms: elapsed });
+        const next = currentTask + 1; currentTask = -1;
+        if (next < TASKS.length) showTaskIntro(next);
+        else { sendResults(); showDone(); }
+      };
+      function showDone() {
+        const rows = results.map(r => `<div class="h-results-row"><span class="h-results-lbl">${r.label}</span><span class="h-results-val">${fmt(r.ms)}</span></div>`).join('');
+        setCard(`<div style="font-size:40px;text-align:center;margin-bottom:12px;">🎉</div><div class="h-task-title" style="text-align:center;">All done!</div><p style="font-size:13px;color:#555;text-align:center;margin-bottom:16px;">Thank you, ${participantId}!</p><div class="h-results">${rows}</div><p style="font-size:12px;color:#555;text-align:center;margin-bottom:12px;">Please complete the <strong>NASA-TLX</strong> and <strong>SUS</strong> survey from the researcher.</p><div id="h-send-status" class="h-status">Sending results…</div>`);
+        showOverlay(); document.getElementById('harness-timer-bar').classList.remove('visible');
+      }
+      function startTimer(idx) {
+        const bar = document.getElementById('harness-timer-bar');
+        document.getElementById('htb-badge').textContent = `Task ${idx + 1}/${TASKS.length}`;
+        document.getElementById('htb-task').textContent = TASKS[idx].title;
+        document.getElementById('htb-time').textContent = '0:00';
+        bar.classList.add('visible'); clearInterval(timerInterval);
+        timerInterval = setInterval(() => { if (taskStartTime) document.getElementById('htb-time').textContent = fmt(Date.now() - taskStartTime); }, 500);
+      }
+      function stopTimer() { clearInterval(timerInterval); timerInterval = null; }
+      function sendResults() {
+        if (!SHEET_URL) { updateStatus('⚠ No sheet URL.', false); return; }
+        fetch(SHEET_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ participant: participantId, design: DESIGN_LABEL, timestamp: new Date().toISOString(), tasks: results.map(r => ({ task: r.label, seconds: (r.ms / 1000).toFixed(2) })) }) })
+          .then(() => updateStatus('✅ Results saved!', true)).catch(() => updateStatus('❌ Network error — note times above.', false));
+      }
+      function updateStatus(msg, ok) { const el = document.getElementById('h-send-status'); if (el) { el.textContent = msg; el.className = 'h-status ' + (ok ? 'ok' : 'err'); } }
+      function setCard(html) { document.getElementById('harness-card').innerHTML = html; }
+      function showOverlay() { document.getElementById('harness-overlay').classList.remove('hidden'); }
+      function hideOverlay() { document.getElementById('harness-overlay').classList.add('hidden'); }
+      function fmt(ms) { const s = Math.floor(ms / 1000); return Math.floor(s / 60) + ':' + (s % 60).toString().padStart(2, '0'); }
+      showWelcome();
+    })();
+  </script>
+</body>
+
+</html>
